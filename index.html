@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RGE Rischio — Innovative Approaches to Risk Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --gold:#c8a03c; --gold-dim:rgba(200,160,60,0.13); --gold-border:rgba(200,160,60,0.28);
+      --navy:#0d1b2e; --navy-dark:#080f1a; --navy-mid:#0b1828; --navy-deep:#091420;
+      --white:#fff; --text:#e0e0e0; --muted:#999; --teal:#00c4b4;
+    }
+    html,body{width:100%;min-height:100vh;background:var(--navy);font-family:'Raleway',sans-serif;color:var(--text);overflow-x:hidden;}
+
+    /* ══ NAVBAR ══ */
+    .navbar{display:flex;align-items:center;justify-content:space-between;padding:0 56px;height:88px;background:var(--navy);border-bottom:1px solid var(--gold-border);position:sticky;top:0;z-index:2000;}
+    .logo-area{display:flex;align-items:center;gap:14px;flex-shrink:0;text-decoration:none;cursor:pointer;}
+    .logo-icon{width:56px;height:56px;}
+    .logo-text h1{font-family:'Cinzel',serif;font-size:21px;font-weight:700;color:var(--gold);letter-spacing:2.5px;line-height:1;}
+    .logo-text p{font-size:8px;color:rgba(200,160,60,0.55);letter-spacing:3px;margin-top:5px;text-transform:uppercase;}
+    .nav-links{display:flex;align-items:center;list-style:none;margin:0 auto;}
+    .nav-links>li{position:relative;}
+    .nav-links>li>a{display:flex;align-items:center;gap:7px;padding:0 18px;height:88px;color:var(--text);text-decoration:none;font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;white-space:nowrap;transition:color .2s;cursor:pointer;}
+    .nav-links>li>a:hover,.nav-links>li.open>a{color:var(--gold);}
+    .chev{font-size:9px;transition:transform .28s;display:inline-block;}
+    .nav-links>li.open>a .chev{transform:rotate(180deg);}
+
+    /* ══ DROPDOWN LVL-1 ══ */
+    .drop1{position:absolute;top:100%;left:0;background:var(--navy-mid);border:1px solid var(--gold-border);border-top:2px solid var(--gold);min-width:300px;list-style:none;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .22s,transform .22s,visibility .22s;z-index:2100;box-shadow:0 18px 55px rgba(0,0,0,.72);}
+    .nav-links>li.open>.drop1{opacity:1;visibility:visible;transform:translateY(0);}
+    .drop1>li{position:relative;}
+    .drop1>li>a{display:flex;align-items:center;justify-content:space-between;padding:15px 22px;font-size:10.5px;font-weight:600;letter-spacing:1.3px;text-transform:uppercase;color:#bbb;text-decoration:none;border-bottom:1px solid rgba(200,160,60,0.09);transition:background .18s,color .18s,padding-left .18s;cursor:pointer;}
+    .drop1>li:last-child>a{border-bottom:none;}
+    .drop1>li>a:hover,.drop1>li.sub-open>a{background:var(--gold-dim);color:var(--gold);padding-left:28px;}
+    .i-left{display:flex;align-items:center;gap:11px;}
+    .dot{width:5px;height:5px;background:var(--gold);border-radius:50%;opacity:.38;transition:opacity .18s;flex-shrink:0;}
+    .drop1>li>a:hover .dot,.drop1>li.sub-open>a .dot{opacity:1;}
+    .sarr{font-size:9px;opacity:.38;transition:opacity .18s;}
+    .drop1>li.sub-open>a .sarr{opacity:1;color:var(--gold);}
+
+    /* ══ FLYOUT PANEL ══ */
+    .flyout{position:absolute;top:-2px;left:100%;width:370px;background:var(--navy-deep);border:1px solid var(--gold-border);border-top:2px solid var(--gold);opacity:0;visibility:hidden;transform:translateX(-8px);transition:opacity .22s,transform .22s,visibility .22s;z-index:2200;box-shadow:0 18px 55px rgba(0,0,0,.82);}
+    .drop1>li.sub-open>.flyout{opacity:1;visibility:visible;transform:translateX(0);}
+    .flyout-hd{padding:16px 22px 12px;border-bottom:1px solid rgba(200,160,60,0.18);background:rgba(200,160,60,0.035);}
+    .flyout-hd h3{font-family:'Cinzel',serif;font-size:10.5px;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;}
+    .flyout-hd p{font-size:10px;color:rgba(180,180,180,.45);margin-top:4px;line-height:1.5;}
+    .fitem{display:flex;align-items:flex-start;gap:13px;padding:13px 22px;border-bottom:1px solid rgba(200,160,60,0.07);text-decoration:none;transition:background .18s;cursor:pointer;}
+    .fitem:last-child{border-bottom:none;}
+    .fitem:hover{background:rgba(200,160,60,0.07);}
+    .ficon{width:34px;height:34px;flex-shrink:0;border:1px solid var(--gold-border);border-radius:6px;display:flex;align-items:center;justify-content:center;transition:border-color .18s,background .18s;margin-top:1px;}
+    .fitem:hover .ficon{border-color:rgba(200,160,60,.65);background:rgba(200,160,60,.06);}
+    .ficon svg{width:17px;height:17px;}
+    .ftxt strong{display:block;font-size:11.5px;font-weight:600;color:#ddd;margin-bottom:3px;line-height:1.3;transition:color .18s;}
+    .ftxt em{display:block;font-style:normal;font-size:10px;color:rgba(155,155,155,.55);line-height:1.4;}
+    .fitem:hover .ftxt strong{color:var(--gold);}
+
+    /* ══ LANG BTN ══ */
+    .lang-btn{background:var(--teal);color:#fff;font-family:'Raleway',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;padding:11px 20px;border:none;cursor:pointer;flex-shrink:0;transition:background .2s;}
+    .lang-btn:hover{background:#00a898;}
+
+    /* ══════════════════════════════════
+       PAGES  (only one visible at a time)
+    ══════════════════════════════════ */
+    .page{display:none;}
+    .page.active{display:block;}
+
+    /* ── HOME / HERO ── */
+    .hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 88px - 50px);}
+    .hero-l{background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 55%,#101e33 100%);padding:100px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
+    .hero-l::before{content:'';position:absolute;top:-120px;left:-120px;width:420px;height:420px;background:radial-gradient(circle,rgba(200,160,60,.04) 0%,transparent 70%);pointer-events:none;}
+    .hero-tag{display:flex;align-items:center;gap:18px;margin-bottom:30px;}
+    .hero-line{display:block;width:58px;height:1px;background:var(--gold);}
+    .hero-tag span:last-child{font-size:11px;letter-spacing:4px;color:rgba(180,180,180,.65);text-transform:uppercase;}
+    .hero-title{font-size:56px;font-weight:700;color:var(--white);line-height:1.1;margin-bottom:30px;letter-spacing:-.5px;}
+    .hero-link{color:#ccc;font-size:15px;font-weight:500;letter-spacing:1.5px;cursor:pointer;display:inline-flex;align-items:center;gap:12px;text-decoration:none;transition:color .2s,gap .2s;}
+    .hero-link:hover{color:var(--gold);gap:20px;}
+    .hero-r{position:relative;overflow:hidden;}
+    .hero-r img{width:100%;height:100%;object-fit:cover;display:block;}
+    .hero-r::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(8,15,26,.38),rgba(8,15,26,.1));}
+
+    /* ── DETAIL PAGE ── */
+    .detail-page{min-height:calc(100vh - 88px - 50px);}
+
+    /* breadcrumb */
+    .breadcrumb{display:flex;align-items:center;gap:8px;padding:22px 60px 0;font-size:11px;letter-spacing:1px;color:rgba(160,160,160,.5);}
+    .breadcrumb span{cursor:pointer;transition:color .18s;}
+    .breadcrumb span:hover{color:var(--gold);}
+    .breadcrumb .sep{opacity:.3;}
+    .breadcrumb .current{color:rgba(200,160,60,.7);}
+
+    /* hero banner of detail */
+    .detail-banner{display:flex;align-items:flex-end;padding:40px 60px 44px;background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy-mid) 100%);border-bottom:1px solid var(--gold-border);position:relative;overflow:hidden;gap:28px;}
+    .detail-banner::before{content:'';position:absolute;right:-60px;top:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(200,160,60,.055) 0%,transparent 70%);pointer-events:none;}
+    .detail-icon-lg{width:72px;height:72px;border:1.5px solid var(--gold-border);border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(200,160,60,.06);flex-shrink:0;}
+    .detail-icon-lg svg{width:36px;height:36px;}
+    .detail-banner-txt{}
+    .detail-category{font-size:10px;letter-spacing:3px;color:rgba(200,160,60,.6);text-transform:uppercase;margin-bottom:8px;}
+    .detail-banner-txt h1{font-family:'Cinzel',serif;font-size:26px;font-weight:700;color:var(--white);line-height:1.2;margin-bottom:10px;}
+    .detail-website a{font-size:12px;color:var(--gold);text-decoration:none;letter-spacing:.5px;transition:opacity .18s;}
+    .detail-website a:hover{opacity:.7;}
+
+    /* content grid */
+    .detail-body{display:grid;grid-template-columns:1fr 340px;gap:0;min-height:400px;}
+
+    /* main content */
+    .detail-main{padding:48px 60px;border-right:1px solid var(--gold-border);}
+    .detail-section{margin-bottom:40px;}
+    .detail-section:last-child{margin-bottom:0;}
+    .section-label{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+    .section-label span:first-child{display:block;width:3px;height:22px;background:var(--gold);border-radius:2px;}
+    .section-label h2{font-family:'Cinzel',serif;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;}
+    .detail-text{font-size:14px;line-height:1.85;color:rgba(220,220,220,.8);font-weight:400;}
+    .detail-text p{margin-bottom:14px;}
+    .detail-text p:last-child{margin-bottom:0;}
+
+    /* risk relevance box */
+    .risk-box{background:rgba(200,160,60,0.07);border:1px solid rgba(200,160,60,0.2);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:20px 24px;margin-top:18px;}
+    .risk-box-label{font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:700;}
+    .risk-box p{font-size:13px;line-height:1.75;color:rgba(210,210,210,.75);}
+
+    /* sidebar */
+    .detail-sidebar{padding:40px 36px;background:rgba(8,15,26,.5);}
+    .sidebar-section{margin-bottom:36px;}
+    .sidebar-section:last-child{margin-bottom:0;}
+    .sidebar-title{font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(200,160,60,.6);font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(200,160,60,.12);}
+    .sidebar-link{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:6px;text-decoration:none;transition:background .18s;margin-bottom:4px;}
+    .sidebar-link:last-child{margin-bottom:0;}
+    .sidebar-link:hover{background:rgba(200,160,60,.07);}
+    .sidebar-link-dot{width:4px;height:4px;background:var(--gold);border-radius:50%;opacity:.45;flex-shrink:0;}
+    .sidebar-link:hover .sidebar-link-dot{opacity:1;}
+    .sidebar-link span{font-size:11px;color:#bbb;transition:color .18s;letter-spacing:.3px;}
+    .sidebar-link:hover span{color:var(--gold);}
+    .sidebar-link.active-link span{color:var(--gold);}
+    .sidebar-link.active-link .sidebar-link-dot{opacity:1;}
+
+    .ext-btn{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(200,160,60,.07);border:1px solid rgba(200,160,60,.2);border-radius:8px;text-decoration:none;transition:background .18s;}
+    .ext-btn:hover{background:rgba(200,160,60,.13);}
+    .ext-btn span{font-size:12px;color:var(--gold);font-weight:600;letter-spacing:.5px;}
+    .ext-btn svg{width:14px;height:14px;}
+
+    /* ══ BEAUTY OF INDONESIA LANDING ══ */
+    .beauty-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,#0e1f35 100%);padding:70px 60px 60px;border-bottom:1px solid var(--gold-border);}
+    .beauty-hero::before{content:'';position:absolute;right:-80px;bottom:-80px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(200,160,60,.06) 0%,transparent 65%);pointer-events:none;}
+    .beauty-hero::after{content:'';position:absolute;left:-40px;top:-40px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(0,196,180,.04) 0%,transparent 65%);pointer-events:none;}
+    .beauty-pretitle{display:flex;align-items:center;gap:16px;margin-bottom:24px;}
+    .beauty-pretitle-line{display:block;width:50px;height:1px;background:var(--gold);}
+    .beauty-pretitle span:last-child{font-size:10px;letter-spacing:4px;color:rgba(200,160,60,.65);text-transform:uppercase;}
+    .beauty-hero h1{font-family:'Cinzel',serif;font-size:38px;font-weight:700;color:var(--white);line-height:1.15;margin-bottom:28px;max-width:680px;}
+    .beauty-quote{position:relative;margin:0 0 0 0;padding:22px 28px 22px 32px;background:rgba(200,160,60,.06);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;max-width:780px;}
+    .beauty-quote-mark{font-family:'Cinzel',serif;font-size:52px;color:var(--gold);opacity:.25;line-height:.8;display:block;margin-bottom:4px;}
+    .beauty-quote p{font-size:15px;font-style:italic;line-height:1.8;color:rgba(220,220,220,.85);}
+    .beauty-quote cite{display:block;margin-top:12px;font-size:11px;font-style:normal;color:rgba(200,160,60,.65);letter-spacing:1.5px;text-transform:uppercase;}
+    .beauty-analysis{margin-top:28px;padding:18px 24px;background:rgba(0,196,180,.05);border:1px solid rgba(0,196,180,.18);border-radius:8px;max-width:780px;}
+    .beauty-analysis-label{font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);margin-bottom:8px;font-weight:700;}
+    .beauty-analysis p{font-size:13px;line-height:1.75;color:rgba(200,200,200,.7);}
+
+    /* category cards */
+    .beauty-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:44px 60px 50px;background:var(--navy);}
+    .beauty-card{background:var(--navy-mid);border:1px solid var(--gold-border);border-radius:10px;padding:28px 24px;cursor:pointer;transition:transform .22s,border-color .22s,box-shadow .22s;position:relative;overflow:hidden;}
+    .beauty-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);opacity:0;transition:opacity .22s;}
+    .beauty-card:hover{transform:translateY(-4px);border-color:rgba(200,160,60,.55);box-shadow:0 14px 40px rgba(0,0,0,.45);}
+    .beauty-card:hover::before{opacity:1;}
+    .beauty-card-num{font-family:'Cinzel',serif;font-size:28px;font-weight:700;color:rgba(200,160,60,.18);line-height:1;margin-bottom:14px;}
+    .beauty-card-title{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--gold);letter-spacing:1.5px;margin-bottom:10px;line-height:1.3;}
+    .beauty-card-sub{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(160,160,160,.5);margin-bottom:14px;}
+    .beauty-card-desc{font-size:12px;line-height:1.7;color:rgba(180,180,180,.65);}
+    .beauty-card-items{margin-top:16px;padding-top:14px;border-top:1px solid rgba(200,160,60,.1);}
+    .beauty-card-item{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:11px;color:rgba(160,160,160,.6);}
+    .beauty-card-item::before{content:'›';color:var(--gold);opacity:.5;font-size:13px;}
+    .beauty-card:hover .beauty-card-item{color:rgba(200,200,200,.8);}
+
+    /* ══ KEY DATA POINTS STYLES ══ */
+    .kdp-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:4px; }
+    .kdp-card {
+      background:rgba(8,15,26,.6);
+      border:1px solid rgba(200,160,60,.14);
+      border-left:3px solid var(--gold);
+      border-radius:0 8px 8px 0;
+      padding:16px 18px;
+      transition:border-color .18s, background .18s;
+    }
+    .kdp-card:hover { background:rgba(200,160,60,.05); border-color:rgba(200,160,60,.35); }
+    .kdp-card.kdp-risk { border-left-color:#e05555; }
+    .kdp-card.kdp-risk:hover { border-color:#e05555; }
+    .kdp-type {
+      display:inline-flex; align-items:center; gap:5px;
+      font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+      margin-bottom:8px; padding:3px 8px;
+      border-radius:20px;
+    }
+    .kdp-type.positive { background:rgba(0,196,180,.1); color:var(--teal); }
+    .kdp-type.risk     { background:rgba(224,85,85,.1);  color:#e07070; }
+    .kdp-type.neutral  { background:rgba(200,160,60,.1); color:var(--gold); }
+    .kdp-text { font-size:12.5px; line-height:1.72; color:rgba(210,210,210,.8); }
+    /* ══ FOOTER ══ */
+    footer{background:#060c15;border-top:1px solid rgba(200,160,60,.14);padding:16px 56px;display:flex;align-items:center;justify-content:space-between;}
+    footer p{font-size:11px;color:rgba(150,150,150,.38);letter-spacing:1px;}
+    footer span{font-size:11px;color:rgba(200,160,60,.38);letter-spacing:1px;}
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
+<nav class="navbar">
+  <div class="logo-area" onclick="showPage('home')">
+    <svg class="logo-icon" viewBox="0 0 56 56" fill="none">
+      <circle cx="28" cy="28" r="26" fill="rgba(200,160,60,0.07)" stroke="#c8a03c" stroke-width=".8"/>
+      <path d="M28 9 L35 21 L28 17 L21 21Z" fill="#c8a03c"/>
+      <path d="M28 47 L35 35 L28 39 L21 35Z" fill="rgba(200,160,60,.42)"/>
+      <path d="M18 18 L23 28 L18 38 L13 28Z" fill="rgba(200,160,60,.62)"/>
+      <path d="M38 18 L43 28 L38 38 L33 28Z" fill="rgba(200,160,60,.62)"/>
+      <circle cx="28" cy="28" r="6" fill="none" stroke="#c8a03c" stroke-width="1.5"/>
+      <path d="M28 22 L29.7 26.3 L34.3 27.4 L31 30.5 L32.1 35.3 L28 33 L23.9 35.3 L25 30.5 L21.7 27.4 L26.3 26.3Z" fill="#c8a03c"/>
+    </svg>
+    <div class="logo-text">
+      <h1>RGE RISCHIO</h1>
+      <p>Innovative approaches to risk management</p>
+    </div>
+  </div>
+
+  <ul class="nav-links" id="navLinks">
+
+    <!-- HOME dropdown -->
+    <li id="homeDD">
+      <a onclick="toggleDD(event,'homeDD')">Home <span class="chev">&#9660;</span></a>
+      <ul class="drop1">
+
+        <!-- Financial & Fiscal -->
+        <li onmouseenter="openSub(this)" onmouseleave="closeSub(this)">
+          <a onclick="showPage('home-financial');closeAll()"><span class="i-left"><span class="dot"></span>Financial &amp; Fiscal Regulator</span><span class="sarr">&#9654;</span></a>
+          <div class="flyout">
+            <div class="flyout-hd"><h3>Financial &amp; Fiscal Regulator</h3><p>State financial &amp; fiscal policy bodies</p></div>
+            <div class="fitem" onclick="showPage('kemenkeu');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg></div>
+              <div class="ftxt"><strong>Ministry of Finance</strong><em>Fiscal policy, taxation, customs &amp; state budgets</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('pajak');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+              <div class="ftxt"><strong>Directorate General of Taxes</strong><em>National tax administration &amp; enforcement</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('ojk');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+              <div class="ftxt"><strong>Financial Services Authority (OJK)</strong><em>Supervisory of banking &amp; non-bank financial sectors</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('bi');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M3 17l4-8 4 4 4-6 4 5"/><path d="M3 21h18"/></svg></div>
+              <div class="ftxt"><strong>Bank Indonesia</strong><em>Central bank, monetary policy &amp; financial stability</em></div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Business & Industrial -->
+        <li onmouseenter="openSub(this)" onmouseleave="closeSub(this)">
+          <a onclick="showPage('home-business');closeAll()"><span class="i-left"><span class="dot"></span>Business &amp; Industrial Sector Regulator</span><span class="sarr">&#9654;</span></a>
+          <div class="flyout">
+            <div class="flyout-hd"><h3>Business &amp; Industrial Sector Regulator</h3><p>Trade, industry &amp; investment regulators</p></div>
+            <div class="fitem" onclick="showPage('kemendag');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+              <div class="ftxt"><strong>Ministry of Trade</strong><em>Trade, export-import &amp; consumer protection</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('kemenperin');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
+              <div class="ftxt"><strong>Ministry of Industry</strong><em>Manufacturing, downstreaming &amp; competitiveness</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('bkpm');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+              <div class="ftxt"><strong>Ministry of Investment / BKPM</strong><em>Domestic &amp; foreign investment coordination</em></div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Law, Security & Legality -->
+        <li onmouseenter="openSub(this)" onmouseleave="closeSub(this)">
+          <a onclick="showPage('home-law');closeAll()"><span class="i-left"><span class="dot"></span>Law, Security &amp; Legality</span><span class="sarr">&#9654;</span></a>
+          <div class="flyout">
+            <div class="flyout-hd"><h3>Law, Security &amp; Legality</h3><p>Legal frameworks &amp; security institutions</p></div>
+            <div class="fitem" onclick="showPage('kemenkumham');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+              <div class="ftxt"><strong>Ministry of Law</strong><em>Legal policy, regulations &amp; human rights</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('kejaksaan');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M12 14c-5 0-8 2-8 4v2h16v-2c0-2-3-4-8-4z"/></svg></div>
+              <div class="ftxt"><strong>Attorney General</strong><em>Civil &amp; state administration law enforcement</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('polri');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></div>
+              <div class="ftxt"><strong>National Police (POLRI)</strong><em>Public security, law enforcement &amp; cybercrime</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('tni');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <div class="ftxt"><strong>Indonesian National Army (TNI)</strong><em>Defense forces &amp; national security stability</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('ham');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+              <div class="ftxt"><strong>Directorate General of Human Rights</strong><em>ESG human rights compliance in business</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('imigrasi');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg></div>
+              <div class="ftxt"><strong>Directorate General of Immigration</strong><em>Movement of people &amp; foreign worker compliance</em></div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Strategic & Data Board -->
+        <li onmouseenter="openSub(this)" onmouseleave="closeSub(this)">
+          <a onclick="showPage('home-strategic');closeAll()"><span class="i-left"><span class="dot"></span>Strategic &amp; Data Board</span><span class="sarr">&#9654;</span></a>
+          <div class="flyout">
+            <div class="flyout-hd"><h3>Strategic &amp; Data Board</h3><p>Sovereign investment &amp; government data governance</p></div>
+            <div class="fitem" onclick="showPage('danantara');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+              <div class="ftxt"><strong>Danantara Investment Management Agency</strong><em>Sovereign wealth fund &amp; BUMN governance</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('den');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+              <div class="ftxt"><strong>National Economic Council (DEN)</strong><em>Strategic economic advisory to the President</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('datago');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+              <div class="ftxt"><strong>One Data Indonesia</strong><em>Government data governance for macro risk analysis</em></div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Affiliations -->
+        <li onmouseenter="openSub(this)" onmouseleave="closeSub(this)">
+          <a onclick="showPage('home-affiliations');closeAll()"><span class="i-left"><span class="dot"></span>Affiliations of Professional &amp; International Organizations</span><span class="sarr">&#9654;</span></a>
+          <div class="flyout">
+            <div class="flyout-hd"><h3>Professional &amp; International Organizations</h3><p>Certification bodies &amp; international standards</p></div>
+            <div class="fitem" onclick="showPage('bnsp');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+              <div class="ftxt"><strong>National Professional Certification Agency (BNSP)</strong><em>Official licensing body for professional certifications</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('girma');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10"/></svg></div>
+              <div class="ftxt"><strong>GIRMA</strong><em>International risk management certification body</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('lspmr');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+              <div class="ftxt"><strong>LSPMR</strong><em>Risk management certification in Indonesia (OJK &amp; BNSP)</em></div>
+            </div>
+            <div class="fitem" onclick="showPage('oecd');closeAll()">
+              <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
+              <div class="ftxt"><strong>OECD</strong><em>International corporate governance &amp; risk standards</em></div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </li>
+
+    <!-- THE BEAUTY OF INDONESIA -->
+    <li id="beautyDD">
+      <a onclick="toggleDD(event,'beautyDD')">The Beauty of Indonesia <span class="chev">&#9660;</span></a>
+      <ul class="drop1">
+        <li onmouseenter="openSub(this)" onmouseleave="closeSub(this)">
+          <a onclick="showPage('beauty-northstar');closeAll()"><span class="i-left"><span class="dot"></span>The North Star</span><span class="sarr">&#9654;</span></a>
+          <div class="flyout">
+            <div class="flyout-hd"><h3>The North Star</h3><p>Multilateral Institutions &amp; Macro Data</p></div>
+            <div class="fitem" onclick="showPage('imf');closeAll()"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a15 15 0 0 1 0 18M3 12h18"/></svg></div><div class="ftxt"><strong>IMF — World Economic Outlook (WEO)</strong><em>Global growth projections &amp; early systemic risk warnings</em></div></div>
+            <div class="fitem" onclick="showPage('worldbank');closeAll()"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><div class="ftxt"><strong>World Bank — Indonesia Economic Prospects</strong><em>Structural challenges, poverty &amp; infrastructure</em></div></div>
+            <div class="fitem" onclick="showPage('adb');closeAll()"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M3 17l4-8 4 4 4-6 4 5"/><path d="M3 21h18"/></svg></div><div class="ftxt"><strong>ADB — Asian Development Outlook</strong><em>Domestic consumption &amp; government capital expenditure</em></div></div>
+          </div>
+        </li>
+        <li onmouseenter="openSub(this)" onmouseleave="closeSub(this)">
+          <a onclick="showPage('beauty-creditworthy');closeAll()"><span class="i-left"><span class="dot"></span>The Credit Worthiness</span><span class="sarr">&#9654;</span></a>
+          <div class="flyout">
+            <div class="flyout-hd"><h3>The Credit Worthiness</h3><p>Market Intelligence &amp; Rating Agencies</p></div>
+            <div class="fitem" onclick="showPage('tradingeco');closeAll()"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M4 20V10l4 4 4-6 4 4 4-8"/></svg></div><div class="ftxt"><strong>Trading Economics — Indonesia</strong><em>Real-time GDP, Debt to GDP, Business Confidence</em></div></div>
+            <div class="fitem" onclick="showPage('sprating');closeAll()"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg></div><div class="ftxt"><strong>S&amp;P Global / Moody's / Fitch</strong><em>Sovereign Credit Rating &amp; foreign capital flow catalyst</em></div></div>
+            <div class="fitem" onclick="showPage('indoinvest');closeAll()"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg></div><div class="ftxt"><strong>Indonesia Investments</strong><em>Economic news in legal &amp; political context</em></div></div>
+          </div>
+        </li>
+        <li onmouseenter="openSub(this)" onmouseleave="closeSub(this)">
+          <a onclick="showPage('beauty-riskpower');closeAll()"><span class="i-left"><span class="dot"></span>The Risk &amp; Power Analysis</span><span class="sarr">&#9654;</span></a>
+          <div class="flyout">
+            <div class="flyout-hd"><h3>The Risk &amp; Power Analysis</h3><p>Geopolitics &amp; Strategic Research</p></div>
+            <div class="fitem" onclick="showPage('rand');closeAll()"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="ftxt"><strong>RAND Corporation — Indonesia Research</strong><em>Indonesia-China-US economic relations &amp; national resilience</em></div></div>
+            <div class="fitem" onclick="showPage('lowy');closeAll()"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 3a15 15 0 0 1 4 9 15 15 0 0 1-4 9"/></svg></div><div class="ftxt"><strong>Lowy Institute — Asia Power Index</strong><em>Economic power, diplomacy &amp; regional trade networks</em></div></div>
+            <div class="fitem" onclick="showPage('csis');closeAll()"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg></div><div class="ftxt"><strong>CSIS — Southeast Asia Program</strong><em>Downstreaming policy &amp; green energy transition</em></div></div>
+          </div>
+        </li>
+        <li onmouseenter="openSub(this)" onmouseleave="closeSub(this)">
+          <a onclick="showPage('beauty-neweconomy');closeAll()"><span class="i-left"><span class="dot"></span>The New Economy</span><span class="sarr">&#9654;</span></a>
+          <div class="flyout">
+            <div class="flyout-hd"><h3>The New Economy</h3><p>Alternative &amp; Sectoral — Digital, ESG &amp; Carbon</p></div>
+            <div class="fitem" onclick="showPage('economy');closeAll()"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div class="ftxt"><strong>e-Conomy SEA — Bain / Google / Temasek</strong><em>Digital economy, fintech &amp; e-commerce potential</em></div></div>
+            <div class="fitem" onclick="showPage('wri');closeAll()"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round"><path d="M12 22V12M12 12C12 7 7 4 3 6c0 4 3 8 9 6M12 12c0-5 5-8 9-6 0 4-3 8-9 6"/></svg></div><div class="ftxt"><strong>WRI Indonesia</strong><em>Sustainable economy, ESG, forestry &amp; carbon assets</em></div></div>
+          </div>
+        </li>
+      </ul>
+    </li>
+
+    <li><a onclick="closeAll()">Invesment Risk</a></li>
+    <li><a onclick="closeAll()">Our Solution</a></li>
+    <li><a onclick="closeAll()">Reach Us</a></li>
+  </ul>
+  <button class="lang-btn">EN | CN | FR</button>
+</nav>
+
+<!-- ════════════════ PAGE: HOME ════════════════ -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-l">
+      <div class="hero-tag"><span class="hero-line"></span><span>Market Advisory</span></div>
+      <h2 class="hero-title">The Future of<br>Indonesian<br>Investment</h2>
+      <a class="hero-link">More News &nbsp;&#8594;</a>
+    </div>
+    <div class="hero-r">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Monumen_Nasional.jpg/1200px-Monumen_Nasional.jpg" alt="Jakarta" onerror="this.style.background='#1a2a3a';this.removeAttribute('src');"/>
+    </div>
+  </section>
+
+  <!-- Category Cards -->
+  <div style="padding:18px 60px 10px;background:var(--navy-mid);border-bottom:1px solid var(--gold-border);">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <span style="display:block;width:40px;height:1px;background:var(--gold);"></span>
+      <span style="font-size:10px;letter-spacing:3.5px;color:rgba(200,160,60,.55);text-transform:uppercase;">Regulatory Framework</span>
+    </div>
+  </div>
+  <div class="beauty-cards" style="grid-template-columns:repeat(5,1fr);gap:16px;padding:24px 60px 44px;background:var(--navy-mid);">
+    <div class="beauty-card" onclick="showPage('home-financial')">
+      <div class="beauty-card-num">01</div>
+      <div class="beauty-card-title">Financial &amp; Fiscal Regulator</div>
+      <div class="beauty-card-sub">State Finance &amp; Fiscal Policy</div>
+      <div class="beauty-card-desc">Core financial regulators governing fiscal policy, taxation, banking supervision and monetary stability.</div>
+      <div class="beauty-card-items">
+        <div class="beauty-card-item">Ministry of Finance</div>
+        <div class="beauty-card-item">Directorate General of Taxes</div>
+        <div class="beauty-card-item">OJK · Bank Indonesia</div>
+      </div>
+    </div>
+    <div class="beauty-card" onclick="showPage('home-business')">
+      <div class="beauty-card-num">02</div>
+      <div class="beauty-card-title">Business &amp; Industrial Sector</div>
+      <div class="beauty-card-sub">Trade, Industry &amp; Investment</div>
+      <div class="beauty-card-desc">Regulators governing trade, manufacturing, downstreaming, and domestic &amp; foreign investment coordination.</div>
+      <div class="beauty-card-items">
+        <div class="beauty-card-item">Ministry of Trade</div>
+        <div class="beauty-card-item">Ministry of Industry</div>
+        <div class="beauty-card-item">Ministry of Investment / BKPM</div>
+      </div>
+    </div>
+    <div class="beauty-card" onclick="showPage('home-law')">
+      <div class="beauty-card-num">03</div>
+      <div class="beauty-card-title">Law, Security &amp; Legality</div>
+      <div class="beauty-card-sub">Legal Framework &amp; Security</div>
+      <div class="beauty-card-desc">Legal and security institutions underpinning corporate compliance, IP protection, and national stability.</div>
+      <div class="beauty-card-items">
+        <div class="beauty-card-item">Ministry of Law · Attorney General</div>
+        <div class="beauty-card-item">National Police · TNI</div>
+        <div class="beauty-card-item">Human Rights · Immigration</div>
+      </div>
+    </div>
+    <div class="beauty-card" onclick="showPage('home-strategic')">
+      <div class="beauty-card-num">04</div>
+      <div class="beauty-card-title">Strategic &amp; Data Board</div>
+      <div class="beauty-card-sub">Sovereign Investment &amp; Data</div>
+      <div class="beauty-card-desc">Sovereign wealth management, presidential economic advisory, and national government data governance.</div>
+      <div class="beauty-card-items">
+        <div class="beauty-card-item">Danantara Investment Agency</div>
+        <div class="beauty-card-item">National Economic Council</div>
+        <div class="beauty-card-item">One Data Indonesia</div>
+      </div>
+    </div>
+    <div class="beauty-card" onclick="showPage('home-affiliations')">
+      <div class="beauty-card-num">05</div>
+      <div class="beauty-card-title">Affiliations &amp; Organizations</div>
+      <div class="beauty-card-sub">Professional &amp; International</div>
+      <div class="beauty-card-desc">Certification bodies and international standards organizations for risk management professional excellence.</div>
+      <div class="beauty-card-items">
+        <div class="beauty-card-item">BNSP · GIRMA · LSPMR</div>
+        <div class="beauty-card-item">OECD</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ PAGE: HOME CATEGORY ════════════════ -->
+<div id="page-home-cat" class="page">
+  <div class="breadcrumb" id="homeCatBreadcrumb"></div>
+  <div class="detail-banner" id="homeCatBanner"></div>
+  <div class="detail-body">
+    <div class="detail-main" id="homeCatMain"></div>
+    <div class="detail-sidebar" id="homeCatSidebar"></div>
+  </div>
+</div>
+
+<!-- ════════════════ PAGE: BEAUTY LANDING ════════════════ -->
+<div id="page-beauty" class="page">
+  <div class="beauty-hero">
+    <div class="beauty-pretitle"><span class="beauty-pretitle-line"></span><span>Economic Intelligence Series</span></div>
+    <h1>The Beauty of Indonesia</h1>
+    <div class="beauty-quote">
+      <span class="beauty-quote-mark">"</span>
+      <p>Indonesia is not only a market, but a geopolitical and economic center of gravity in Southeast Asia. To accurately map its potential and development, we need a combination of traditional macro data, market sentiment, and strategic risk analysis.</p>
+      <cite>— Chief Analyst Perspective, RAND Corporation</cite>
+    </div>
+    <div class="beauty-analysis">
+      <div class="beauty-analysis-label">&#9646; Quick Analysis 2026</div>
+      <p>The world is paying close attention to Indonesia's leadership transition and the sustainability of major infrastructure projects. The primary focus of global analysts remains on the debt-to-GDP ratio and the effectiveness of commodity downstreaming in sustaining growth above 5%.</p>
+    </div>
+  </div>
+  <div class="beauty-cards" id="beautyCards">
+    <div class="beauty-card" onclick="showPage('beauty-northstar')">
+      <div class="beauty-card-num">01</div>
+      <div class="beauty-card-title">The North Star</div>
+      <div class="beauty-card-sub">Multilateral Institutions &amp; Macro Data</div>
+      <div class="beauty-card-desc">The gold standard for GDP growth projections, inflation forecasts, and fiscal policy references used by global investors.</div>
+      <div class="beauty-card-items">
+        <div class="beauty-card-item">IMF — World Economic Outlook</div>
+        <div class="beauty-card-item">World Bank — Indonesia Economic Prospects</div>
+        <div class="beauty-card-item">ADB — Asian Development Outlook</div>
+      </div>
+    </div>
+    <div class="beauty-card" onclick="showPage('beauty-creditworthy')">
+      <div class="beauty-card-num">02</div>
+      <div class="beauty-card-title">The Credit Worthiness</div>
+      <div class="beauty-card-sub">Market Intelligence &amp; Rating Agencies</div>
+      <div class="beauty-card-desc">Understanding how the world views Indonesia's investment risks and financial stability through real-time data and sovereign ratings.</div>
+      <div class="beauty-card-items">
+        <div class="beauty-card-item">Trading Economics — Indonesia</div>
+        <div class="beauty-card-item">S&amp;P Global / Moody's / Fitch</div>
+        <div class="beauty-card-item">Indonesia Investments</div>
+      </div>
+    </div>
+    <div class="beauty-card" onclick="showPage('beauty-riskpower')">
+      <div class="beauty-card-num">03</div>
+      <div class="beauty-card-title">The Risk &amp; Power Analysis</div>
+      <div class="beauty-card-sub">Geopolitics &amp; Strategic Research</div>
+      <div class="beauty-card-desc">Viewing Indonesia's economy through the lens of regional security, diplomatic influence, and geopolitical power dynamics.</div>
+      <div class="beauty-card-items">
+        <div class="beauty-card-item">RAND Corporation — Indonesia Research</div>
+        <div class="beauty-card-item">Lowy Institute — Asia Power Index</div>
+        <div class="beauty-card-item">CSIS — Southeast Asia Program</div>
+      </div>
+    </div>
+    <div class="beauty-card" onclick="showPage('beauty-neweconomy')">
+      <div class="beauty-card-num">04</div>
+      <div class="beauty-card-title">The New Economy</div>
+      <div class="beauty-card-sub">Alternative &amp; Sectoral Analysis</div>
+      <div class="beauty-card-desc">Mapping Indonesia's digital economy, fintech, ESG, and carbon assets as the new engines of growth in the post-commodity era.</div>
+      <div class="beauty-card-items">
+        <div class="beauty-card-item">e-Conomy SEA — Bain / Google / Temasek</div>
+        <div class="beauty-card-item">WRI Indonesia — Sustainable Economy</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ PAGE: BEAUTY CATEGORY LANDINGS ════════════════ -->
+<div id="page-beauty-cat" class="page">
+  <div class="breadcrumb" id="beautyCatBreadcrumb"></div>
+  <div class="detail-banner" id="beautyCatBanner"></div>
+  <div class="detail-body">
+    <div class="detail-main" id="beautyCatMain"></div>
+    <div class="detail-sidebar" id="beautyCatSidebar"></div>
+  </div>
+</div>
+
+<!-- ════════════════ PAGE: DETAIL (HOME & BEAUTY sources) ════════════════ -->
+<div id="page-detail" class="page">
+  <div class="breadcrumb" id="detailBreadcrumb"></div>
+  <div class="detail-banner" id="detailBanner"></div>
+  <div class="detail-body">
+    <div class="detail-main" id="detailMain"></div>
+    <div class="detail-sidebar" id="detailSidebar"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2025 RGE Rischio. All rights reserved.</p>
+  <span>Innovative Approaches to Risk Management</span>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════
+   DATA — HOME institutions
+═══════════════════════════════════════════ */
+var DATA = {
+  kemenkeu:{
+    id:'kemenkeu', category:'Financial & Fiscal Regulator',
+    name:'Ministry of Finance of the Republic of Indonesia',
+    website:'https://www.kemenkeu.go.id', websiteLabel:'kemenkeu.go.id',
+    icon:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/>',
+    overview:'Manage state finances and wealth, fiscal policy, taxation, customs, and state budgets.',
+    detail:'The Ministry of Finance of the Republic of Indonesia is the central institution responsible for managing state financial affairs. Its key functions encompass formulating and implementing fiscal policy, overseeing taxation and customs administration, managing the state budget (APBN), and supervising state assets and wealth. As the primary architect of Indonesia\'s fiscal framework, the Ministry sets the direction for government spending, revenue collection, and public debt management — all of which have far-reaching implications for the national and investment climate.',
+    relevance:'State financial regulations and fiscal risk management standards are the main references in the company\'s financial advisory services. Changes in fiscal policy, tax regulations, and budget priorities directly shape the risk environment that businesses must navigate. RGE Rischio monitors Ministry of Finance directives as a primary input for financial risk advisory and regulatory compliance services.',
+    group:'financial'
+  },
+  pajak:{
+    id:'pajak', category:'Financial & Fiscal Regulator',
+    name:'Directorate General of Taxes (DGT)',
+    website:'https://www.pajak.go.id', websiteLabel:'pajak.go.id',
+    icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+    overview:'National tax administration, tax law enforcement, and taxpayer services throughout Indonesia.',
+    detail:'The Directorate General of Taxes (DJP) operates under the Ministry of Finance and is responsible for administering Indonesia\'s national tax system. This includes the formulation and enforcement of tax laws, collection of income tax, value-added tax (VAT), and other levies, as well as providing services and guidance to taxpayers across the country. DJP continuously modernizes its systems through electronic filing (e-Filing), e-Billing, and the Coretax system to improve compliance and reduce administrative burdens.',
+    relevance:'Tax compliance is a core component of financial risk management that every company must manage. Non-compliance with Indonesian tax regulations exposes businesses to significant legal and financial risks, including administrative penalties, tax audits, and reputational damage. RGE Rischio integrates DJP regulatory developments into its tax risk assessment and corporate compliance advisory frameworks.',
+    group:'financial'
+  },
+  ojk:{
+    id:'ojk', category:'Financial & Fiscal Regulator',
+    name:'Financial Services Authority (OJK)',
+    website:'https://www.ojk.go.id', websiteLabel:'ojk.go.id',
+    icon:'<circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>',
+    overview:'Supervisory of the financial services sector, including risk management arrangements for the banking and non-bank (P2P Lending) industries.',
+    detail:'Otoritas Jasa Keuangan (OJK) is an independent government institution established to regulate, supervise, and protect Indonesia\'s financial services sector. Its oversight spans banking, capital markets, insurance, pension funds, financing institutions, and fintech including P2P lending platforms. OJK issues prudential regulations, licensing requirements, and conduct-of-business rules that govern how financial institutions operate, manage risk, and serve consumers across Indonesia.',
+    relevance:'OJK establishes financial institution risk management standards that serve as industry references. For companies operating in or engaging with the financial sector, OJK regulations define the minimum standards for risk governance, capital adequacy, and consumer protection. RGE Rischio references OJK regulatory frameworks as benchmarks for enterprise risk management advisory in financial and adjacent sectors.',
+    group:'financial'
+  },
+  bi:{
+    id:'bi', category:'Financial & Fiscal Regulator',
+    name:'Bank Indonesia',
+    website:'https://www.bi.go.id', websiteLabel:'bi.go.id',
+    icon:'<path d="M3 17l4-8 4 4 4-6 4 5"/><path d="M3 21h18"/>',
+    overview:'The central bank of the Republic of Indonesia regulates monetary policy, payment systems, and financial system stability.',
+    detail:'Bank Indonesia (BI) serves as the independent central bank of the Republic of Indonesia. Its core mandate encompasses maintaining monetary stability, regulating and supervising the payment systems, and preserving the stability of the financial system. BI sets the benchmark interest rate (BI Rate), manages foreign exchange reserves, issues national currency, and oversees macroprudential policy to prevent systemic risks in the financial sector.',
+    relevance:'Monetary policy and financial system stability directly affect macroeconomic risk management. Decisions made by Bank Indonesia — including interest rate adjustments, exchange rate interventions, and macroprudential policy changes — have immediate and cascading effects on investment costs, credit availability, and overall business risk exposure. RGE Rischio incorporates BI policy signals into its macroeconomic risk monitoring and advisory services.',
+    group:'financial'
+  },
+  kemendag:{
+    id:'kemendag', category:'Business & Industrial Sector Regulator',
+    name:'Ministry of Trade of the Republic of Indonesia',
+    website:'https://www.kemendag.go.id', websiteLabel:'kemendag.go.id',
+    icon:'<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+    overview:'Regulate trade, export-import, and consumer protection policies.',
+    detail:'The Ministry of Trade of the Republic of Indonesia is responsible for formulating, implementing, and evaluating policies in the field of domestic and international trade. Its scope includes regulating import and export activities, setting trade standards, overseeing consumer protection mechanisms, and negotiating bilateral and multilateral trade agreements. The Ministry plays a pivotal role in shaping Indonesia\'s position in the global trading system and ensuring fair business competition within the domestic market.',
+    relevance:'Trade risks, export-import regulations, and business competition policies require a comprehensive business risk assessment. Sudden changes in trade regulations, import quotas, or tariff structures can materially impact supply chains and profitability. RGE Rischio monitors Ministry of Trade policy developments as a key input for trade risk assessments and market entry advisory for businesses operating in Indonesia.',
+    group:'business'
+  },
+  kemenperin:{
+    id:'kemenperin', category:'Business & Industrial Sector Regulator',
+    name:'Ministry of Industry of the Republic of Indonesia',
+    website:'https://www.kemenperin.go.id', websiteLabel:'kemenperin.go.id',
+    icon:'<rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>',
+    overview:'Developing and supervising the manufacturing industry sector, downstreaming, and increasing the competitiveness of the national industry.',
+    detail:'The Ministry of Industry of the Republic of Indonesia oversees the development, regulation, and supervision of the manufacturing sector. Its strategic agenda focuses on accelerating industrial downstreaming (hilirisasi) of natural resources, increasing value-added production within Indonesia, enhancing the competitiveness of national industries, and promoting the adoption of Industry 4.0 technologies. The Ministry administers industry licensing, technical standards, and investment incentives for industrial zones.',
+    relevance:'Industrial operational risk management, compliance with safety standards, and supply chain risks are central concerns for any business engaged in manufacturing or resource processing. Regulatory shifts in downstreaming policy, changes in industrial licensing requirements, or new environmental standards can significantly alter the risk landscape. RGE Rischio tracks Ministry of Industry regulations to inform industrial sector risk advisory and supply chain risk management.',
+    group:'business'
+  },
+  bkpm:{
+    id:'bkpm', category:'Business & Industrial Sector Regulator',
+    name:'Ministry of Investment / BKPM',
+    website:'https://www.bkpm.go.id', websiteLabel:'bkpm.go.id',
+    icon:'<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>',
+    overview:'Carry out coordination of policies and services in the field of domestic and foreign investment.',
+    detail:'The Ministry of Investment / Investment Coordinating Board (BKPM) is the primary government body responsible for coordinating, facilitating, and promoting investment in Indonesia — both domestic (PMDN) and foreign (PMA). It administers the Online Single Submission (OSS) system, which serves as the integrated gateway for business licensing and investment permits. BKPM works to create a conducive investment climate by streamlining regulatory processes, resolving investment disputes, and promoting Indonesia as a top investment destination.',
+    relevance:'Investment risk analysis, project due diligence, and risk mitigation of business licensing regulations are critical for any investor entering or expanding in Indonesia. The regulatory environment governing foreign investment ownership (DNI/NDPI), licensing timelines, and sectoral restrictions directly affects investment feasibility and risk profiles. RGE Rischio references BKPM frameworks in its investment risk assessment and market entry advisory services.',
+    group:'business'
+  },
+  kemenkumham:{
+    id:'kemenkumham', category:'Law, Security & Legality',
+    name:'Ministry of Law of the Republic of Indonesia',
+    website:'https://www.kemenkumham.go.id', websiteLabel:'kemenkumham.go.id',
+    icon:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+    overview:'Formulating policies in the fields of law, laws and regulations, corrections, and human rights protection.',
+    detail:'The Ministry of Law and Human Rights of the Republic of Indonesia is responsible for formulating and implementing national legal policy. Its mandate encompasses the drafting and harmonization of laws and regulations, management of the correctional system, intellectual property registration and protection, immigration administration, and enforcement of human rights norms. The Ministry plays a foundational role in maintaining the rule of law and ensuring that Indonesia\'s legal framework aligns with international standards.',
+    relevance:'Compliance with corporate law regulations, IP protection, and corporate legal risk management are essential dimensions of business risk in Indonesia. Changes in legal policy, new regulatory requirements, or shifts in enforcement priorities can create significant compliance obligations and legal liabilities for companies. RGE Rischio monitors Ministry of Law developments as part of its legal and regulatory risk advisory services.',
+    group:'law'
+  },
+  kejaksaan:{
+    id:'kejaksaan', category:'Law, Security & Legality',
+    name:'Attorney General of the Republic of Indonesia',
+    website:'https://www.kejaksaan.go.id', websiteLabel:'kejaksaan.go.id',
+    icon:'<circle cx="12" cy="8" r="4"/><path d="M12 14c-5 0-8 2-8 4v2h16v-2c0-2-3-4-8-4z"/>',
+    overview:'Law enforcement in the civil and state administration sectors as well as supervision of business legality aspects.',
+    detail:'The Attorney General\'s Office (Kejaksaan Agung) is the highest prosecutorial authority in Indonesia, responsible for criminal law enforcement, civil litigation on behalf of the state, and supervision of state administration legal matters. It plays a critical role in investigating and prosecuting corruption, financial crimes, and economic offenses. The Kejaksaan also has authority to supervise the legality of business operations in cases involving state interests.',
+    relevance:'Corporate criminal law risks, legal compliance, and corruption prevention are material risks for businesses operating in Indonesia. The Kejaksaan\'s enforcement priorities — particularly around anti-corruption, financial crimes, and business legality — directly shape the compliance risk landscape. RGE Rischio incorporates Kejaksaan enforcement trends into its legal compliance and anti-corruption risk advisory.',
+    group:'law'
+  },
+  polri:{
+    id:'polri', category:'Law, Security & Legality',
+    name:'National Police of the Republic of Indonesia (POLRI)',
+    website:'https://www.polri.go.id', websiteLabel:'polri.go.id',
+    icon:'<path d="M3 11l19-9-9 19-2-8-8-2z"/>',
+    overview:'Organizing public security and order, law enforcement, protection, protection, and public services.',
+    detail:'Kepolisian Negara Republik Indonesia (POLRI) is the national police force responsible for maintaining public security, law and order, and providing protective services across Indonesia. POLRI handles criminal investigations, cybercrime enforcement, economic crime prevention, and public order management. Its specialized directorates — including the Cyber Crime Unit and the Economic Crime Directorate — are particularly relevant to businesses facing digital security threats and financial fraud risks.',
+    relevance:'Corporate security risks, handling cybercrime, and prevention of economic crimes are growing concerns for businesses in Indonesia\'s increasingly digital economy. POLRI\'s enforcement capacity and focus areas directly affect the security risk environment. RGE Rischio integrates POLRI enforcement developments into its corporate security risk assessments and cybercrime risk advisory frameworks.',
+    group:'law'
+  },
+  tni:{
+    id:'tni', category:'Law, Security & Legality',
+    name:'Indonesian National Army (TNI)',
+    website:'https://www.tni.mil.id', websiteLabel:'tni.mil.id',
+    icon:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+    overview:'The country\'s defense forces consist of the Army, Navy, and Air Force.',
+    detail:'Tentara Nasional Indonesia (TNI) is Indonesia\'s national armed forces, comprising the Army (Angkatan Darat), Navy (Angkatan Laut), and Air Force (Angkatan Udara). TNI\'s primary mandate is to defend national sovereignty, territorial integrity, and the safety of the Indonesian people from external military threats. Beyond traditional defense, TNI also participates in humanitarian operations, disaster relief, and regional peacekeeping missions — roles that contribute to national and regional stability.',
+    relevance:'Maintaining state sovereignty and national security stability which affects the investment climate. Geopolitical stability and the strength of national defense directly influence the risk premium attached to investments in Indonesia. A secure and stable security environment underpins investor confidence and reduces country risk assessments. RGE Rischio factors national security stability into its geopolitical and country risk analysis.',
+    group:'law'
+  },
+  ham:{
+    id:'ham', category:'Law, Security & Legality',
+    name:'Directorate General of Human Rights',
+    website:'https://www.ham.go.id', websiteLabel:'ham.go.id',
+    icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    overview:'Ensure the application of human rights principles in the company\'s business practices.',
+    detail:'The Directorate General of Human Rights (Ditjen HAM) under the Ministry of Law and Human Rights is responsible for formulating, implementing, and evaluating policies related to the protection and fulfilment of human rights in Indonesia. It monitors human rights conditions, develops national action plans on business and human rights, and ensures that Indonesia\'s legislative framework aligns with international human rights obligations, including the UN Guiding Principles on Business and Human Rights.',
+    relevance:'Compliance with human rights principles in business operations is an increasingly important component of ESG risk management. International investors, lenders, and supply chain partners increasingly require evidence of human rights due diligence. Failure to comply with human rights norms can result in reputational damage, supply chain disruptions, and exclusion from ESG-aligned investment portfolios. RGE Rischio integrates human rights risk into its ESG risk advisory services.',
+    group:'law'
+  },
+  imigrasi:{
+    id:'imigrasi', category:'Law, Security & Legality',
+    name:'Directorate General of Immigration',
+    website:'https://www.imigrasi.go.id', websiteLabel:'imigrasi.go.id',
+    icon:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/>',
+    overview:'Regulating the traffic of people in/out of Indonesian territory (important for foreign workers/business travel).',
+    detail:'The Directorate General of Immigration (Ditjen Imigrasi) under the Ministry of Law and Human Rights manages all matters related to the movement of people crossing Indonesian territory. This includes issuing passports and travel documents, processing visa applications, granting stay permits for foreign nationals (KITAS/KITAP), administering work permits for foreign workers (TKA), and enforcing immigration laws. For multinational companies, Ditjen Imigrasi is a critical agency governing the mobility of expatriate employees and business visitors.',
+    relevance:'Immigration compliance risk management for foreign workers and international business operations in Indonesia is a significant operational concern. Violations of immigration regulations — including overstaying visas, working without proper permits, or improper sponsorship of foreign workers — can result in substantial fines, deportations, and blacklistings. RGE Rischio addresses immigration compliance as part of its operational risk management advisory for companies with international workforces.',
+    group:'law'
+  },
+  danantara:{
+    id:'danantara', category:'Strategic & Data Board',
+    name:'Danantara Investment Management Agency',
+    website:'https://www.danantara.go.id', websiteLabel:'danantara.go.id',
+    icon:'<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
+    overview:'A sovereign investment management institution that aims to optimize state assets and Indonesia\'s second sovereign wealth fund.',
+    detail:'Danantara (Daya Anagata Nusantara) is Indonesia\'s sovereign wealth fund and investment management agency established to optimize the management of state-owned enterprise (BUMN) assets and channel them into strategic national investments. As Indonesia\'s second sovereign wealth fund alongside the Indonesia Investment Authority (INA), Danantara manages a portfolio of BUMN assets with a mandate to generate sustainable returns, support infrastructure development, and advance national economic priorities across key sectors.',
+    relevance:'Risk management of the country\'s investment portfolio, governance of BUMN assets, and long-term investment risks on a national scale are central to understanding Indonesia\'s macro risk environment. Danantara\'s investment decisions and asset allocation strategies signal government priorities and can materially affect sector-specific risk profiles. RGE Rischio tracks Danantara\'s portfolio developments as part of its sovereign risk and BUMN sector analysis.',
+    group:'strategic'
+  },
+  den:{
+    id:'den', category:'Strategic & Data Board',
+    name:'National Economic Council (DEN)',
+    website:'https://www.den.go.id', websiteLabel:'den.go.id',
+    icon:'<circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>',
+    overview:'Giving strategic advice to the President regarding the direction of the national economy.',
+    detail:'The National Economic Council (Dewan Ekonomi Nasional / DEN) is a high-level advisory body that provides strategic recommendations directly to the President of the Republic of Indonesia on matters of national economic policy. Composed of leading economists, academics, and sectoral experts, DEN synthesizes economic intelligence, global trends, and domestic conditions to inform presidential decision-making on fiscal priorities, economic structural reforms, and development strategies.',
+    relevance:'Economic policy recommendations from DEN affect the macro risk landscape that companies must anticipate. When DEN recommends structural reforms, sectoral pivots, or new economic priorities to the President, the resulting policy changes can rapidly alter the regulatory and competitive environment. RGE Rischio monitors DEN recommendations as leading indicators for macro risk scenario planning and strategic advisory services.',
+    group:'strategic'
+  },
+  datago:{
+    id:'datago', category:'Strategic & Data Board',
+    name:'One Data Indonesia (Satu Data Indonesia)',
+    website:'https://data.go.id', websiteLabel:'data.go.id',
+    icon:'<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>',
+    overview:'Government data governance policies to produce accurate data for macro risk analysis.',
+    detail:'One Data Indonesia (Satu Data Indonesia) is a national data governance initiative established by Presidential Regulation No. 39 of 2019. It mandates the integration, standardization, and interoperability of government data across all ministries and agencies, creating a unified and authoritative repository of official Indonesian government data. The portal data.go.id serves as the public-facing platform providing access to thousands of government datasets covering economic, social, demographic, and spatial information.',
+    relevance:'Reliable government data access supports data-driven risk analysis and accurate decision-making. High-quality, integrated government data is the foundation of credible macro risk modeling, sectoral analysis, and investment decision-making. RGE Rischio utilizes Satu Data Indonesia datasets as a primary source for empirical risk analysis, ensuring that advisory services are grounded in authoritative government statistics.',
+    group:'strategic'
+  },
+  bnsp:{
+    id:'bnsp', category:'Affiliations of Professional & International Organizations',
+    name:'National Professional Certification Agency (BNSP)',
+    website:'https://www.bnsp.go.id', websiteLabel:'bnsp.go.id',
+    icon:'<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+    overview:'Quality assurance of labor competencies through professional certification in various fields. Responsible directly to the President.',
+    detail:'Badan Nasional Sertifikasi Profesi (BNSP) is an independent government institution established under Presidential Decree and operating under direct presidential authority. BNSP is responsible for the development and quality assurance of Indonesia\'s professional competency certification system. It accredits and supervises Professional Certification Bodies (LSP) across all sectors, establishes national competency standards (SKKNI), and issues official professional certificates that are recognized nationwide as the standard for workforce competency verification.',
+    relevance:'BNSP grants an official license to LSPMR to conduct national standard risk management competency tests. This licensing relationship is the legal foundation for LSPMR\'s authority to certify risk management professionals in Indonesia. For RGE Rischio and its affiliated certification programs, BNSP accreditation provides the highest level of official government recognition for risk management professional credentials.',
+    group:'affiliations'
+  },
+  girma:{
+    id:'girma', category:'Affiliations of Professional & International Organizations',
+    name:'Global Institute for Risk Management Professionals (GIRMA)',
+    website:'https://www.girma.or.id', websiteLabel:'girma.or.id',
+    icon:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/>',
+    overview:'An international certification body that provides competency recognition for risk management practitioners.',
+    detail:'The Global Institute for Risk Management Professionals (GIRMA) is an international certification and professional recognition body dedicated to advancing the standards of risk management practice worldwide. GIRMA\'s certification framework is built upon internationally recognized risk management standards, most notably ISO 31000:2018, and awards professional designations that are recognized across international markets. GIRMA serves as the international counterpart to national certification bodies, providing cross-border professional recognition for risk practitioners.',
+    relevance:'GIRMA provides recognition of international professional degrees (CRMA, CRMO, CRMP, CRGP) based on ISO 31000. For risk management professionals seeking international recognition of their competencies, GIRMA certifications provide a globally credible credential. RGE Rischio\'s partnership with GIRMA enables its affiliated professionals to hold dual nationally and internationally recognized certifications, enhancing their credibility in cross-border advisory engagements.',
+    group:'affiliations'
+  },
+  lspmr:{
+    id:'lspmr', category:'Affiliations of Professional & International Organizations',
+    name:'Lembaga Sertifikasi Profesi Manajemen Risiko (LSPMR)',
+    website:'https://www.lspmr.org', websiteLabel:'lspmr.org',
+    icon:'<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>',
+    overview:'Provider of risk management certification in Indonesia recognized by OJK and BNSP. License No. BNSP-LSP-121-ID.',
+    detail:'Lembaga Sertifikasi Profesi Manajemen Risiko (LSPMR) is Indonesia\'s specialized professional certification body for risk management, licensed by BNSP under License Number BNSP-LSP-121-ID and recognized by the Financial Services Authority (OJK). LSPMR develops and administers competency-based assessments for risk management professionals across multiple certification schemes, ensuring that practitioners meet national professional standards. LSPMR operates in partnership with GIRMA to offer dual certification pathways combining Indonesian national standards with international recognition.',
+    relevance:'LSPMR is a direct partner for dual risk management professional competency certification: BNSP national certificate combined with GIRMA professional degree. This dual certification model is unique in Indonesia\'s risk management landscape, offering professionals both the nationally mandated BNSP credential and internationally recognized GIRMA professional designations (CRMA, CRMO, CRMP, CRGP) through a single, integrated assessment program aligned with ISO 31000.',
+    group:'affiliations'
+  },
+  oecd:{
+    id:'oecd', category:'Affiliations of Professional & International Organizations',
+    name:'Organisation for Economic Co-operation and Development (OECD)',
+    website:'https://www.oecd.org', websiteLabel:'oecd.org',
+    icon:'<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+    overview:'A reference for international standards in corporate governance and global risk management principles.',
+    detail:'The Organisation for Economic Co-operation and Development (OECD) is an intergovernmental organisation with 38 member countries committed to stimulating economic progress and world trade. The OECD produces internationally recognized frameworks, guidelines, and standards covering corporate governance, anti-corruption measures, financial market regulation, environmental policy, and risk management principles. Indonesia engages with the OECD as a Key Partner country with ambitions toward full membership, making OECD standards increasingly relevant to Indonesian regulatory and business practice.',
+    relevance:'The OECD\'s corporate risk governance standards and anti-corruption framework are the reference for international standards. Companies seeking international investors, listings, or partnerships are increasingly expected to demonstrate alignment with OECD corporate governance and risk management principles. RGE Rischio uses OECD frameworks as international benchmarks in its corporate governance advisory and enterprise risk management consulting, ensuring client organizations meet global best-practice standards.',
+    group:'affiliations'
+  }
+};
+
+/* sidebar groups */
+var GROUPS = {
+  financial:{
+    label:'Financial & Fiscal Regulator',
+    items:['kemenkeu','pajak','ojk','bi']
+  },
+  business:{
+    label:'Business & Industrial Sector Regulator',
+    items:['kemendag','kemenperin','bkpm']
+  },
+  law:{
+    label:'Law, Security & Legality',
+    items:['kemenkumham','kejaksaan','polri','tni','ham','imigrasi']
+  },
+  strategic:{
+    label:'Strategic & Data Board',
+    items:['danantara','den','datago']
+  },
+  affiliations:{
+    label:'Affiliations of Professional & International Organizations',
+    items:['bnsp','girma','lspmr','oecd']
+  }
+};
+
+/* short labels for sidebar */
+var SHORT = {
+  kemenkeu:'Ministry of Finance',
+  pajak:'Directorate General of Taxes',
+  ojk:'Financial Services Authority (OJK)',
+  bi:'Bank Indonesia',
+  kemendag:'Ministry of Trade',
+  kemenperin:'Ministry of Industry',
+  bkpm:'Ministry of Investment / BKPM',
+  kemenkumham:'Ministry of Law',
+  kejaksaan:'Attorney General',
+  polri:'National Police (POLRI)',
+  tni:'Indonesian National Army (TNI)',
+  ham:'Directorate General of Human Rights',
+  imigrasi:'Directorate General of Immigration',
+  danantara:'Danantara Investment Agency',
+  den:'National Economic Council (DEN)',
+  datago:'One Data Indonesia',
+  bnsp:'BNSP',
+  girma:'GIRMA',
+  lspmr:'LSPMR',
+  oecd:'OECD'
+};
+
+/* ═══════════════════════════════════════════
+   DATA — BEAUTY OF INDONESIA sources
+═══════════════════════════════════════════ */
+var BEAUTY_DATA = {
+  imf:{
+    id:'imf', category:'The North Star', catId:'beauty-northstar',
+    name:'IMF — World Economic Outlook (WEO)',
+    website:'https://www.imf.org/en/Publications/WEO', websiteLabel:'imf.org/WEO',
+    icon:'<circle cx="12" cy="12" r="9"/><path d="M12 3a15 15 0 0 1 0 18M3 12h18"/><path d="M5 7a14 14 0 0 0 14 0M5 17a14 14 0 0 1 14 0"/>',
+    overview:'It is crucial for viewing Indonesia\'s position in the context of the global economy. The IMF often provides early warnings regarding systemic risks.',
+    detail:'The International Monetary Fund\'s World Economic Outlook (WEO) is published twice annually and serves as the primary global reference for macroeconomic projections and analysis. For Indonesia specifically, the WEO provides GDP growth forecasts, inflation trajectories, current account balances, and fiscal deficit projections that are benchmarked against regional peers and global trends. The IMF\'s Article IV Consultation reports on Indonesia offer even deeper country-specific analysis, examining structural vulnerabilities, monetary policy effectiveness, and financial sector resilience.',
+    relevance:'The WEO is crucial for positioning Indonesia within the broader global economic context and for identifying systemic risk warnings early. When the IMF revises Indonesia\'s growth projections or flags vulnerabilities in its financial system, these signals directly affect sovereign bond yields, currency stability, and foreign direct investment flows. RGE Rischio uses WEO data as the foundational macro reference for country risk assessments and scenario planning for clients operating in or considering entry into Indonesia.',
+    keypoints:{
+      meta:'IMF Article IV Consultation Indonesia, January 2026 &amp; World Economic Outlook, April 2026',
+      items:[
+        {type:'positive', text:'Indonesia\'s GDP growth projected at <strong>5.1% in 2026</strong>, driven by strong domestic demand and accommodative fiscal and monetary policy.'},
+        {type:'positive', text:'State debt ratio remains well below the <strong>60% GDP threshold</strong>, providing adequate fiscal space and sustaining investor confidence in macroeconomic stability.'},
+        {type:'positive', text:'Danantara investments projected to <strong>strengthen national economic activity</strong> in government-priority sectors throughout 2026.'},
+        {type:'risk', text:'IMF warns of <strong>\'fiscal slippage\' risk</strong> — if global pressures worsen without policy response, the budget deficit could exceed 3% of GDP around 2028.'},
+        {type:'risk', text:'Current account deficit projected to widen to <strong>-1.0% of GDP in 2026</strong>, triggered by copper export disruptions and rising investment imports.'},
+        {type:'risk', text:'In an extreme global stress scenario, Indonesia\'s growth could fall to <strong>4.1%</strong> — far below government targets — due to significant investment and consumption decline.'}
+      ]
+    },
+    group:'northstar'
+  },
+  worldbank:{
+    id:'worldbank', category:'The North Star', catId:'beauty-northstar',
+    name:'World Bank — Indonesia Economic Prospects (IEP)',
+    website:'https://www.worldbank.org/en/country/indonesia/publication/indonesia-economic-prospects', websiteLabel:'worldbank.org/indonesia',
+    icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+    overview:'It is the most comprehensive biennial report addressing Indonesia\'s structural challenges, poverty, and infrastructure.',
+    detail:'The World Bank\'s Indonesia Economic Prospects (IEP) report is published biannually and represents the most thorough institutional analysis of Indonesia\'s economic development challenges and opportunities. Beyond standard macroeconomic indicators, the IEP delves into structural reform priorities, poverty reduction progress, infrastructure investment gaps, human capital development, and the quality of public service delivery. Special focus sections each edition examine emerging issues such as climate finance, digital transformation, and labor market evolution.',
+    relevance:'Structural challenges, poverty dynamics, and infrastructure gaps are core dimensions of the long-term investment risk profile in Indonesia. For businesses evaluating multi-year investments or infrastructure-linked projects, understanding Indonesia\'s structural reform trajectory is essential. RGE Rischio references IEP findings when advising clients on project risk assessments, public-private partnership evaluations, and long-horizon country risk modeling.',
+    keypoints:{
+      meta:'World Bank Indonesia Economic Prospects, December 2025 — worldbank.org/indonesia',
+      items:[
+        {type:'positive', text:'Indonesian economy grew <strong>5.0% in the first three quarters of 2025</strong>, projected to maintain similar pace through 2026–2027, supported by strong investment and solid net exports.'},
+        {type:'positive', text:'Indonesia is the <strong>largest digital economy in ASEAN in 2025</strong> — this sector has become a new growth engine attracting global technology investors.'},
+        {type:'positive', text:'As of March 2025, poverty rate fell to <strong>8.5%</strong> with 1.4 million people successfully lifted out of poverty within a year.'},
+        {type:'risk', text:'Labor market is a <strong>structural weak point</strong>: most new jobs created are in low-value-added sectors, with real wages declining an average of 1.1% per year since 2018.'},
+        {type:'risk', text:'Indonesia\'s internet quality and speed <strong>lags behind regional peers</strong> — this gap hampers productivity and long-term digital investor competitiveness.'},
+        {type:'risk', text:'Stable 5% growth is deemed <strong>\'insufficient\'</strong> — World Bank asserts that without more aggressive business regulatory reform, Indonesia risks being trapped in low-quality growth.'}
+      ]
+    },
+    group:'northstar'
+  },
+  adb:{
+    id:'adb', category:'The North Star', catId:'beauty-northstar',
+    name:'ADB — Asian Development Outlook (ADO)',
+    website:'https://www.adb.org/publications/asian-development-outlook', websiteLabel:'adb.org/ADO',
+    icon:'<path d="M3 17l4-8 4 4 4-6 4 5"/><path d="M3 21h18"/>',
+    overview:'Focusing on Asia, this report goes into great detail in dissecting domestic consumption and government capital expenditure as engines of growth.',
+    detail:'The Asian Development Bank\'s Asian Development Outlook (ADO) is the flagship annual publication providing comprehensive economic analysis for Asia-Pacific, with Indonesia receiving dedicated country coverage. The ADO\'s particular strength lies in its granular analysis of domestic demand drivers — breaking down consumption patterns, investment cycles, and government capital expenditure as growth engines. Its regional perspective allows for nuanced comparisons of Indonesia\'s performance against ASEAN peers, providing critical competitive positioning insights.',
+    relevance:'Domestic consumption trends and government capital expenditure cycles are key determinants of Indonesia\'s business environment and investment timing. ADB\'s detailed sectoral decomposition of growth drivers informs sector-specific risk assessments — particularly for consumer goods, infrastructure, and construction sectors. RGE Rischio integrates ADO\'s demand-side analysis into market entry timing assessments and sector exposure analysis for clients across the Asia-Pacific region.',
+    keypoints:{
+      meta:'ADB Asian Development Outlook, April 2026 — adb.org/publications/asian-development-outlook-april-2026',
+      items:[
+        {type:'positive', text:'ADB projects Indonesia\'s growth at <strong>5.2% in both 2026 and 2027</strong> — the most optimistic forecast among the three major multilateral institutions — driven by improved investment and stable consumption.'},
+        {type:'positive', text:'Indonesia is <strong>one of the drivers</strong> of Southeast Asia\'s upgraded growth projections, alongside Malaysia, Singapore, and Vietnam, thanks to strong Q3 2025 performance.'},
+        {type:'risk', text:'ADB warns that risks will <strong>escalate if Middle East conflict persists</strong> — in a downside scenario, Southeast Asian growth could fall 1.3 percentage points during 2026–2027.'},
+        {type:'risk', text:'High household debt, slowing investment, and infrastructure bottlenecks cited as <strong>three structural constraints</strong> limiting growth potential across ASEAN economies including Indonesia.'}
+      ]
+    },
+    group:'northstar'
+  },
+  tradingeco:{
+    id:'tradingeco', category:'The Credit Worthiness', catId:'beauty-creditworthy',
+    name:'Trading Economics — Indonesia',
+    website:'https://tradingeconomics.com/indonesia/indicators', websiteLabel:'tradingeconomics.com',
+    icon:'<path d="M4 20V10l4 4 4-6 4 4 4-8"/>',
+    overview:'The best dashboard for real-time data visualization (GDP, Debt to GDP, Business Confidence) compiled from official sources.',
+    detail:'Trading Economics provides one of the most comprehensive and accessible real-time economic data platforms, aggregating official statistics from Bank Indonesia, Badan Pusat Statistik (BPS), the Ministry of Finance, and international bodies into a single interactive dashboard. For Indonesia specifically, the platform covers over 300 economic indicators — including GDP growth rates, inflation, interest rates, debt-to-GDP ratios, trade balances, business confidence indices, and consumer sentiment — all updated as official releases are published.',
+    relevance:'Real-time economic data is essential for dynamic risk monitoring and rapid response to changing conditions. Traditional annual reports cannot capture the speed at which economic conditions shift. Trading Economics\' dashboard enables RGE Rischio analysts to monitor leading indicators in near real-time, facilitating early identification of emerging risk signals — such as rising inflation, deteriorating trade balances, or declining business confidence — before they crystallize into material risks for client portfolios.',
+    keypoints:{
+      meta:'Trading Economics Indonesia — GDP, Consumer Confidence, Credit Rating · tradingeconomics.com/indonesia',
+      items:[
+        {type:'positive', text:'Indonesia\'s GDP grew <strong>5.61% year-on-year in Q1 2026</strong> — the fastest pace since Q3 2022 — driven by a surge in government spending and private consumption during Ramadan and Eid.'},
+        {type:'neutral', text:'Consumer Confidence Index stood at <strong>123.0 in April 2026</strong>, but showing a weakening trend since the start of the year — reflecting household caution amid purchasing power pressures.'},
+        {type:'neutral', text:'Debt-to-GDP ratio stable at around <strong>40%</strong> — well below the 60% ceiling — but foreign exchange reserves faced pressure as Bank Indonesia intervened to contain Rupiah weakening.'},
+        {type:'risk', text:'Indonesian exports <strong>slowed sharply to 0.90% in Q1 2026</strong> due to supply chain disruptions from geopolitical tensions, while imports surged 7.18% — narrowing the trade surplus significantly.'}
+      ]
+    },
+    group:'creditworthy'
+  },
+  sprating:{
+    id:'sprating', category:'The Credit Worthiness', catId:'beauty-creditworthy',
+    name:'S&P Global / Moody\'s / Fitch — Sovereign Credit Ratings',
+    website:'https://www.spglobal.com/ratings', websiteLabel:'spglobal.com/ratings',
+    icon:'<path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>',
+    overview:'Through their research terminals, these three institutions determine Indonesia\'s Sovereign Credit Rating. Changes in outlook (such as "Stable" to "Positive") are often the catalyst for foreign capital flows.',
+    detail:'The "Big Three" credit rating agencies — Standard & Poor\'s Global Ratings, Moody\'s Investors Service, and Fitch Ratings — collectively determine Indonesia\'s sovereign creditworthiness, which directly influences the country\'s borrowing costs and attractiveness to international capital. Indonesia currently holds investment-grade ratings from all three agencies (BBB/Baa2/BBB). Beyond the headline rating, the agencies\' outlook designations (Negative, Stable, Positive) and watchlist placements send powerful signals to global bond markets and institutional investors about the trajectory of Indonesia\'s fiscal and economic health.',
+    relevance:'Sovereign credit rating changes are among the most powerful catalysts for capital flow shifts in and out of Indonesia. An outlook upgrade from "Stable" to "Positive" can trigger billions in portfolio inflows as global funds re-weight Indonesia in their emerging market allocations; conversely, a downgrade or negative watch triggers rapid capital outflows and currency depreciation. RGE Rischio monitors rating agency communications, methodological updates, and rating triggers as core inputs for sovereign risk monitoring and client portfolio risk alerts.',
+    keypoints:{
+      meta:'Moody\'s Rating Update April 2026 · Fitch Ratings March 2026 · S&amp;P Global',
+      items:[
+        {type:'positive', text:'Indonesia maintains <strong>investment grade status</strong> from all three agencies — BBB (S&amp;P and Fitch) and Baa2 (Moody\'s) — reflecting global confidence in Indonesia\'s ability to meet its debt obligations.'},
+        {type:'risk', text:'In early 2026, both <strong>Moody\'s and Fitch revised Indonesia\'s outlook from \'Stable\' to \'Negative\'</strong> — a serious warning signal due to fiscal policy uncertainty and weakening central bank independence.'},
+        {type:'risk', text:'The shift to \'Negative\' outlook has <strong>direct capital flow impact</strong>: many global institutional funds such as pension and insurance funds have mandates to reduce exposure, potentially triggering capital outflows.'},
+        {type:'risk', text:'Fitch specifically highlighted risks of <strong>policy decision centralization and policy mix inconsistency</strong> as factors increasing uncertainty for long-term investors.'}
+      ]
+    },
+    group:'creditworthy'
+  },
+  indoinvest:{
+    id:'indoinvest', category:'The Credit Worthiness', catId:'beauty-creditworthy',
+    name:'Indonesia Investments',
+    website:'https://www.indonesia-investments.com', websiteLabel:'indonesia-investments.com',
+    icon:'<circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/>',
+    overview:'This website is very popular among expats and analysts because it presents economic news in a legal and political context that is easy for outsiders to understand.',
+    detail:'Indonesia Investments is a specialized online platform that bridges the information gap for foreign investors, expatriate business professionals, and international analysts seeking to understand Indonesia\'s economic developments within their proper legal and political context. Unlike wire services that report raw data, Indonesia Investments contextualizes economic events within Indonesia\'s regulatory framework, political dynamics, and business culture — making it an invaluable resource for those who lack deep in-country expertise but need to make informed investment or business decisions.',
+    relevance:'Contextual interpretation of economic news within Indonesia\'s legal and political framework is critical for accurate risk assessment. Economic data points mean little without understanding the political dynamics that drive policy choices or the legal frameworks that determine business feasibility. RGE Rischio references Indonesia Investments as part of its qualitative intelligence gathering, particularly for monitoring regulatory changes, political risk developments, and business environment shifts that require contextual expertise beyond raw data analysis.',
+    keypoints:{
+      meta:'Indonesia Investments · Allianz Trade Country Risk Report February 2026 · indonesia-investments.com',
+      items:[
+        {type:'positive', text:'Indonesia is the <strong>largest economy in Southeast Asia</strong>, ranking 7th globally by purchasing power parity (PPP) — making it the most strategic market for investors seeking ASEAN entry.'},
+        {type:'positive', text:'Newly concluded trade agreements including <strong>IEU-CEPA and IC-CEPA</strong> projected to increase Indonesia\'s GDP by 0.19% and boost export growth up to 0.88%.'},
+        {type:'neutral', text:'The commodity downstreaming agenda — from raw nickel to EV battery materials — could <strong>lift manufacturing export value</strong>, but investors are watching whether value chains can move to high-value downstream products like cathodes and EV components.'},
+        {type:'risk', text:'Foreign investors increasingly flag <strong>regulatory inconsistency and expanding military role in business</strong> as governance risks that may hamper long-term FDI growth.'}
+      ]
+    },
+    group:'creditworthy'
+  },
+  rand:{
+    id:'rand', category:'The Risk & Power Analysis', catId:'beauty-riskpower',
+    name:'RAND Corporation — Indonesia Research',
+    website:'https://www.rand.org/topics/indonesia.html', websiteLabel:'rand.org',
+    icon:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+    overview:'RAND monitors Indonesia\'s economic relations with China and the US, as well as its impact on national resilience.',
+    detail:'The RAND Corporation is one of the world\'s most respected nonprofit policy research organizations, with a long history of providing rigorous analysis on geopolitical and economic security issues. RAND\'s Indonesia research program examines the complex interplay between Indonesia\'s economic relationships with major powers — particularly China (through Belt and Road Initiative investments and trade dependence) and the United States (through security partnerships and market access) — and how these dynamics affect Indonesia\'s national resilience, strategic autonomy, and long-term development trajectory.',
+    relevance:'Geopolitical risk is increasingly inseparable from economic risk for businesses operating in Indonesia. Indonesia\'s strategic positioning between Chinese economic influence and American security partnerships creates a complex geopolitical risk environment. Supply chain dependencies, infrastructure financing sources, and technology access are all affected by the Indonesia-China-US triangular relationship. RGE Rischio integrates RAND\'s geopolitical analysis into its country risk frameworks and strategic advisory for multinational clients navigating Indonesia\'s complex external relationships.',
+    keypoints:{
+      meta:'RAND Corporation — U.S.-China Competition in the Indo-Pacific, Security Cooperation in Strategic Competition · rand.org',
+      items:[
+        {type:'neutral', text:'RAND positions Indonesia as a <strong>key nation in US-China influence competition</strong> in the Indo-Pacific — this strategic position makes Indonesia an arena for investment, technology, and security partnership competition between the two major powers.'},
+        {type:'risk', text:'RAND research concludes that <strong>US influence in Indonesia is weaker</strong> than in the Philippines, Japan, and Australia — opening space for China to deepen its investment dominance, especially in energy, infrastructure, and mineral downstreaming.'},
+        {type:'risk', text:'Indonesia consistently applies a <strong>\'strategic hedging\' policy</strong> — refusing to openly align with either the US or China. For investors, this means a dynamic policy landscape vulnerable to sudden shifts.'},
+        {type:'risk', text:'RAND emphasizes that <strong>US-China competition is now geo-economic, not merely military</strong> — investment regulations, market access, and technology policy in Indonesia are increasingly influenced by pressure from both global power blocs.'}
+      ]
+    },
+    group:'riskpower'
+  },
+  lowy:{
+    id:'lowy', category:'The Risk & Power Analysis', catId:'beauty-riskpower',
+    name:'Lowy Institute — Asia Power Index',
+    website:'https://power.lowyinstitute.org', websiteLabel:'lowyinstitute.org',
+    icon:'<circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 3a15 15 0 0 1 4 9 15 15 0 0 1-4 9 15 15 0 0 1-4-9 15 15 0 0 1 4-9z"/>',
+    overview:'Measures Indonesia\'s "economic strength" not only by numbers, but by diplomatic influence and trade networks in the region.',
+    detail:'The Lowy Institute\'s Asia Power Index is an annual, data-driven assessment of power dynamics across 26 countries in the Indo-Pacific region. For Indonesia, the Index measures power across eight dimensions: economic capability, military capability, resilience, future resources, diplomatic influence, economic relationships, defense networks, and cultural influence. This multi-dimensional approach provides a far more nuanced picture of Indonesia\'s regional standing than GDP alone — capturing its growing diplomatic clout, the depth of its trade network relationships, and the soft power Indonesia projects across Southeast Asia.',
+    relevance:'Indonesia\'s regional power trajectory directly affects its business environment, regulatory independence, and attractiveness as an investment destination. A rising regional power has more latitude to set its own regulatory agenda, resist external pressure on investment terms, and leverage its position for better trade deals. RGE Rischio uses the Asia Power Index to contextualize Indonesia\'s evolving geopolitical leverage and assess how shifts in regional power dynamics may affect investment conditions, regulatory sovereignty, and market access for clients.',
+    keypoints:{
+      meta:'Lowy Institute Asia Power Index 2025 — power.lowyinstitute.org/countries/indonesia',
+      items:[
+        {type:'positive', text:'In the Asia Power Index 2025, Indonesia ranks <strong>9th out of 27 countries</strong> with a comprehensive score of 22.5 — categorized as a \'Middle Power\' with greater influence than expected based on its resources.'},
+        {type:'positive', text:'Indonesia recorded the <strong>largest resilience gain (+2.5 points)</strong> compared to other Asian countries — indicating relatively strong domestic economic resilience amid global shocks.'},
+        {type:'risk', text:'Indonesia recorded significant <strong>declines in two influence indicators</strong> in 2025: dropped two places in economic relationships (to position 11) and four places in defense networks (to position 12).'},
+        {type:'neutral', text:'Lowy assesses President Prabowo\'s diplomacy as <strong>more globally than regionally oriented</strong> — signaling Indonesia is positioning on a broader international stage, but potentially reducing depth of short-term ASEAN economic integration.'}
+      ]
+    },
+    group:'riskpower'
+  },
+  csis:{
+    id:'csis', category:'The Risk & Power Analysis', catId:'beauty-riskpower',
+    name:'CSIS — Center for Strategic and International Studies',
+    website:'https://www.csis.org/programs/southeast-asia-program', websiteLabel:'csis.org',
+    icon:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/>',
+    overview:'Provides an in-depth analysis of downstreaming policies and green energy transition in Indonesia.',
+    detail:'The Center for Strategic and International Studies (CSIS) Southeast Asia Program is one of Washington\'s most influential think tanks producing policy analysis on Indonesian economic and political affairs. CSIS provides particularly authoritative analysis on two of the most economically significant policy areas in Indonesia today: the commodity downstreaming (hilirisasi) agenda — which aims to ban raw material exports and force value-added processing within Indonesia — and the green energy transition, including Indonesia\'s Just Energy Transition Partnership (JETP) commitments and coal phase-out timeline.',
+    relevance:'Indonesia\'s downstreaming policy and energy transition agenda create both significant risks and opportunities for investors. The nickel export ban, for example, fundamentally restructured global nickel supply chains and created new investment opportunities in Indonesian battery manufacturing while creating supply disruption risks for downstream users globally. Similarly, the energy transition timeline affects stranded asset risks for coal-related investments. RGE Rischio integrates CSIS policy analysis into its sector risk assessments, particularly for resources, energy, and manufacturing sectors most affected by hilirisasi and ESG transition risks.',
+    keypoints:{
+      meta:'CSIS — Chinese Energy Investments in Southeast Asia, December 2025 · csis.org',
+      items:[
+        {type:'positive', text:'CSIS positions Indonesia at the <strong>center of global clean energy transition</strong> — as the world\'s largest nickel reserve holder, Indonesia is the focal point of EV battery investment competition among the US, EU, and China.'},
+        {type:'risk', text:'US withdrawal from Indonesia\'s <strong>Just Energy Transition Partnership (JETP)</strong> created an energy transition funding gap quickly filled by Chinese investment — shifting strategic partnership dynamics in the energy sector.'},
+        {type:'risk', text:'CSIS documents <strong>governance risks in large-scale investment projects</strong> in Indonesia: several industrial-scale projects face allegations of illegal land seizure and environmental damage — risks that can trigger long-term legal disputes.'},
+        {type:'neutral', text:'Indonesia\'s downstreaming agenda has a strong foundation, but CSIS notes that <strong>real value addition is only achieved</strong> when the production chain moves to downstream products like cathodes, battery precursors, and EV components — not just stopping at the smelting stage.'}
+      ]
+    },
+    group:'riskpower'
+  },
+  economy:{
+    id:'economy', category:'The New Economy', catId:'beauty-neweconomy',
+    name:'e-Conomy SEA Report — Bain & Company / Google / Temasek',
+    website:'https://economysea.withgoogle.com', websiteLabel:'economysea.withgoogle.com',
+    icon:'<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>',
+    overview:'This annual report is the "holy book" for seeing the potential of the digital economy, fintech, and e-commerce Indonesia.',
+    detail:'The e-Conomy SEA Report, published annually by Google, Temasek, and Bain & Company, is widely regarded as the definitive reference for Southeast Asia\'s digital economy. For Indonesia — the region\'s largest digital economy — the report provides granular data on the size and growth trajectory of e-commerce, ride-hailing, food delivery, travel, digital financial services, and digital media sectors. It tracks the evolution of internet users, digital payment adoption, and venture capital flows, providing both historical trend analysis and forward projections for the next five years.',
+    relevance:'Indonesia\'s digital economy is one of the most dynamic and high-growth sectors, with GMV projected to reach $130 billion by 2025. For businesses and investors, the e-Conomy SEA Report provides the most reliable sizing and trajectory data for digital sector opportunities and risks. RGE Rischio uses e-Conomy SEA data in digital sector risk assessments, fintech regulatory risk analysis, and technology investment due diligence — helping clients understand both the growth potential and the emerging regulatory, competition, and cybersecurity risks within Indonesia\'s digital economy.',
+    keypoints:{
+      meta:'e-Conomy SEA 2025, Google / Temasek / Bain &amp; Company, November 2025 · economysea.withgoogle.com',
+      items:[
+        {type:'positive', text:'Indonesia is the <strong>largest digital economy in Southeast Asia</strong> with GMV reaching USD 99 billion in 2025 — growing 14% year-on-year, led by e-commerce contributing USD 71 billion of that total.'},
+        {type:'positive', text:'<strong>3 in 5 Indonesians now shop online</strong> and over 60% of transactions are already digital — a permanent structural change opening major opportunities for fintech and e-commerce investors.'},
+        {type:'positive', text:'Indonesia is a <strong>primary AI adoption hotspot</strong> in Southeast Asia — consumer interest in AI recorded three times higher than the global average, creating a massive yet largely untapped market.'},
+        {type:'risk', text:'The report highlights serious challenges: <strong>fragmented regulations, urban-rural digital infrastructure gaps</strong>, and the need to build consumer trust — factors that represent real risks for digital investors unfamiliar with the Indonesian market.'}
+      ]
+    },
+    group:'neweconomy'
+  },
+  wri:{
+    id:'wri', category:'The New Economy', catId:'beauty-neweconomy',
+    name:'WRI Indonesia — World Resources Institute',
+    website:'https://www.wri.org/indonesia', websiteLabel:'wri.org/indonesia',
+    icon:'<path d="M12 22V12M12 12C12 7 7 4 3 6c0 4 3 8 9 6M12 12c0-5 5-8 9-6 0 4-3 8-9 6"/>',
+    overview:'Important for monitoring the sustainable economy (ESG), the forestry sector, and the potential of carbon which is now a new economic asset.',
+    detail:'The World Resources Institute (WRI) Indonesia office conducts research and provides policy recommendations on the intersection of economic development, environmental sustainability, and climate change in Indonesia. WRI\'s work spans tropical forest conservation and deforestation monitoring, sustainable land use and agricultural practices, clean energy transition policy, urban sustainability, and — increasingly — carbon market development. As Indonesia holds the world\'s third-largest tropical forest and has committed to achieving net-zero emissions by 2060, WRI\'s research has become central to understanding Indonesia\'s emerging green economy.',
+    relevance:'Indonesia\'s sustainable economy, ESG credentials, and carbon asset potential are becoming increasingly material to investment decisions and risk assessments. International investors applying ESG screens are monitoring Indonesia\'s deforestation rates, carbon credit integrity, and Just Energy Transition commitments. Businesses with Indonesian supply chains face growing scrutiny over forest-risk commodities (palm oil, timber, pulp). Meanwhile, Indonesia\'s carbon market — launched in 2023 — represents a nascent but potentially vast new economic asset class. RGE Rischio integrates WRI research into ESG risk assessments, supply chain sustainability risk analysis, and carbon asset valuation advisory.',
+    keypoints:{
+      meta:'WRI Indonesia — Clean Energy Investments Report October 2025, Global Forest Watch April 2026 · wri.org/indonesia',
+      items:[
+        {type:'positive', text:'WRI finds that <strong>clean energy investment can support Indonesia\'s 8% annual growth target</strong> through 2029 while achieving net-zero emissions by 2060 — opening over <strong>2.8 million new jobs</strong> in the renewable energy sector.'},
+        {type:'positive', text:'Indonesia has submitted its latest climate commitments ahead of <strong>COP30</strong>, targeting emissions peak in 2030 then declining to 1.26 GtCO2e by 2035 — a strong signal to global ESG investors of Indonesia\'s seriousness in entering international carbon markets.'},
+        {type:'risk', text:'WRI warns that Indonesia\'s <strong>energy sector is projected to become the largest emissions contributor</strong> between 2026–2027, surpassing the forestry sector — a critical turning point demanding accelerated renewable energy investment.'},
+        {type:'risk', text:'The government\'s food estate program may drive <strong>new land clearing in Papua</strong> — a deforestation risk that directly threatens investor compliance with the EU Deforestation Regulation (EUDR) taking full effect December 2026 and potentially blocking export access to European markets.'}
+      ]
+    },
+    group:'neweconomy'
+  }
+};
+
+/* ═══════════════════════════════════════════
+   BEAUTY CATEGORY CONFIG
+═══════════════════════════════════════════ */
+var BEAUTY_CATS = {
+  'beauty-northstar':{
+    label:'The North Star',
+    subtitle:'Multilateral Institutions & Macro Data',
+    desc:'The gold standard reference for GDP growth projections, inflation forecasts, and fiscal policy — the foundational layer of all Indonesia macroeconomic analysis.',
+    icon:'<circle cx="12" cy="12" r="9"/><path d="M12 3a15 15 0 0 1 0 18M3 12h18"/>',
+    items:['imf','worldbank','adb']
+  },
+  'beauty-creditworthy':{
+    label:'The Credit Worthiness',
+    subtitle:'Market Intelligence & Rating Agencies',
+    desc:'How the world assesses Indonesia\'s investment risk and financial stability — from real-time dashboards to sovereign credit ratings that move capital markets.',
+    icon:'<path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>',
+    items:['tradingeco','sprating','indoinvest']
+  },
+  'beauty-riskpower':{
+    label:'The Risk & Power Analysis',
+    subtitle:'Geopolitics & Strategic Research',
+    desc:'Viewing Indonesia\'s economy through the lens of regional security, diplomatic influence, and geopolitical power — the dimension that separates strategic investors from pure financial analysts.',
+    icon:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+    items:['rand','lowy','csis']
+  },
+  'beauty-neweconomy':{
+    label:'The New Economy',
+    subtitle:'Alternative & Sectoral Analysis',
+    desc:'Mapping Indonesia\'s digital economy, ESG credentials, and carbon assets — the new engines of growth that are reshaping the country\'s economic identity in the post-commodity era.',
+    icon:'<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>',
+    items:['economy','wri']
+  }
+};
+
+var BEAUTY_SHORT = {
+  imf:'IMF — World Economic Outlook',
+  worldbank:'World Bank — Indonesia Economic Prospects',
+  adb:'ADB — Asian Development Outlook',
+  tradingeco:'Trading Economics',
+  sprating:'S&P Global / Moody\'s / Fitch',
+  indoinvest:'Indonesia Investments',
+  rand:'RAND Corporation',
+  lowy:'Lowy Institute — Asia Power Index',
+  csis:'CSIS — Southeast Asia Program',
+  economy:'e-Conomy SEA Report',
+  wri:'WRI Indonesia'
+};
+
+/* ═══════════════════════════════════════════
+   NAV FUNCTIONS
+═══════════════════════════════════════════ */
+function toggleDD(e,id){
+  e.preventDefault();
+  var el=document.getElementById(id);
+  var isOpen=el.classList.contains('open');
+  document.querySelectorAll('.nav-links>li').forEach(function(d){d.classList.remove('open');});
+  if(!isOpen) el.classList.add('open');
+}
+function openSub(li){
+  li.parentElement.querySelectorAll('.sub-open').forEach(function(s){s.classList.remove('sub-open');});
+  li.classList.add('sub-open');
+}
+function closeSub(li){ li.classList.remove('sub-open'); }
+function closeAll(){
+  document.querySelectorAll('.nav-links>li').forEach(function(d){d.classList.remove('open');});
+  document.querySelectorAll('.sub-open').forEach(function(s){s.classList.remove('sub-open');});
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.nav-links')){closeAll();}
+});
+
+/* ═══════════════════════════════════════════
+   HOME CATEGORY CONFIG
+═══════════════════════════════════════════ */
+var HOME_CATS = {
+  'home-financial':{
+    label:'Financial & Fiscal Regulator',
+    subtitle:'State Finance & Fiscal Policy Bodies',
+    desc:'Core financial regulators that govern Indonesia\'s fiscal policy, taxation administration, banking supervision, and monetary stability — the primary references for all financial advisory services and risk management frameworks.',
+    icon:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/>',
+    items:['kemenkeu','pajak','ojk','bi']
+  },
+  'home-business':{
+    label:'Business & Industrial Sector Regulator',
+    subtitle:'Trade, Industry & Investment Coordination',
+    desc:'Regulatory bodies governing Indonesia\'s trade environment, manufacturing competitiveness, industrial downstreaming agenda, and domestic & foreign investment coordination — key institutions for operational and compliance risk management.',
+    icon:'<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+    items:['kemendag','kemenperin','bkpm']
+  },
+  'home-law':{
+    label:'Law, Security & Legality',
+    subtitle:'Legal Frameworks & Security Institutions',
+    desc:'The legal and security institutions that define Indonesia\'s rule-of-law environment — covering corporate law compliance, IP protection, criminal enforcement, national defense stability, human rights standards, and immigration compliance for international operations.',
+    icon:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+    items:['kemenkumham','kejaksaan','polri','tni','ham','imigrasi']
+  },
+  'home-strategic':{
+    label:'Strategic & Data Board',
+    subtitle:'Sovereign Investment & Government Data Governance',
+    desc:'High-level institutions managing Indonesia\'s sovereign wealth, providing strategic economic direction to the presidency, and governing the national data ecosystem — essential for macro risk scenario planning and data-driven advisory.',
+    icon:'<circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>',
+    items:['danantara','den','datago']
+  },
+  'home-affiliations':{
+    label:'Affiliations of Professional & International Organizations',
+    subtitle:'Certification Bodies & International Standards',
+    desc:'The professional certification bodies and international standards organizations that underpin RGE Rischio\'s credentials — from BNSP national licensing to GIRMA international recognition, LSPMR dual certification, and OECD global governance benchmarks.',
+    icon:'<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+    items:['bnsp','girma','lspmr','oecd']
+  }
+};
+
+/* ═══════════════════════════════════════════
+   PAGE ROUTING
+═══════════════════════════════════════════ */
+function showPage(id){
+  closeAll();
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+
+  if(id==='home'){
+    document.getElementById('page-home').classList.add('active');
+  } else if(id==='beauty'){
+    document.getElementById('page-beauty').classList.add('active');
+  } else if(HOME_CATS[id]){
+    buildHomeCat(id);
+    document.getElementById('page-home-cat').classList.add('active');
+  } else if(BEAUTY_CATS[id]){
+    buildBeautyCat(id);
+    document.getElementById('page-beauty-cat').classList.add('active');
+  } else if(BEAUTY_DATA[id]){
+    buildBeautyDetail(id);
+    document.getElementById('page-detail').classList.add('active');
+  } else if(DATA[id]){
+    buildDetail(id);
+    document.getElementById('page-detail').classList.add('active');
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ═══════════════════════════════════════════
+   BUILD: HOME CATEGORY PAGE
+═══════════════════════════════════════════ */
+function buildHomeCat(catId){
+  var cat = HOME_CATS[catId];
+
+  document.getElementById('homeCatBreadcrumb').innerHTML =
+    '<span onclick="showPage(\'home\')" style="cursor:pointer;">Home</span>'+
+    '<span class="sep">›</span>'+
+    '<span class="current">'+cat.label+'</span>';
+
+  document.getElementById('homeCatBanner').innerHTML =
+    '<div class="detail-icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.4" stroke-linecap="round">'+cat.icon+'</svg></div>'+
+    '<div class="detail-banner-txt">'+
+      '<div class="detail-category">Home — Regulatory Framework</div>'+
+      '<h1>'+cat.label+'</h1>'+
+      '<div class="detail-website"><span style="font-size:12px;color:rgba(200,160,60,.55);letter-spacing:1px;">'+cat.subtitle+'</span></div>'+
+    '</div>';
+
+  var main = '<div class="detail-section">'+
+    '<div class="section-label"><span></span><h2>Overview</h2></div>'+
+    '<div class="detail-text"><p>'+cat.desc+'</p></div>'+
+  '</div>'+
+  '<div class="detail-section">'+
+    '<div class="section-label"><span></span><h2>Institutions in This Category</h2></div>';
+
+  cat.items.forEach(function(key){
+    var d = DATA[key];
+    main += '<div style="background:rgba(200,160,60,.04);border:1px solid rgba(200,160,60,.15);border-radius:8px;padding:22px 24px;margin-bottom:16px;cursor:pointer;transition:border-color .18s,background .18s;" '+
+      'onmouseover="this.style.borderColor=\'rgba(200,160,60,.4)\';this.style.background=\'rgba(200,160,60,.07)\'" '+
+      'onmouseout="this.style.borderColor=\'rgba(200,160,60,.15)\';this.style.background=\'rgba(200,160,60,.04)\'" '+
+      'onclick="showPage(\''+key+'\')" >'+
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round" style="width:16px;height:16px;flex-shrink:0;">'+d.icon+'</svg>'+
+        '<strong style="font-size:13px;color:#ddd;font-weight:600;">'+d.name+'</strong>'+
+        '<span style="margin-left:auto;font-size:11px;color:rgba(200,160,60,.5);">View details ›</span>'+
+      '</div>'+
+      '<p style="font-size:12.5px;line-height:1.7;color:rgba(175,175,175,.65);">'+d.overview+'</p>'+
+      '<div style="margin-top:10px;"><a href="'+d.website+'" target="_blank" onclick="event.stopPropagation()" style="font-size:11px;color:rgba(200,160,60,.55);text-decoration:none;letter-spacing:.5px;">&#127760; '+d.websiteLabel+' &#8599;</a></div>'+
+    '</div>';
+  });
+  main += '</div>';
+  document.getElementById('homeCatMain').innerHTML = main;
+
+  /* sidebar — current category items + all other categories */
+  var sb = '<div class="sidebar-section">'+
+    '<div class="sidebar-title">'+cat.label+'</div>';
+  cat.items.forEach(function(key){
+    sb += '<div class="sidebar-link active-link" onclick="showPage(\''+key+'\')">'+
+      '<span class="sidebar-link-dot"></span><span>'+SHORT[key]+'</span></div>';
+  });
+  sb += '</div>';
+  Object.keys(HOME_CATS).forEach(function(ck){
+    if(ck===catId) return;
+    var c = HOME_CATS[ck];
+    sb += '<div class="sidebar-section"><div class="sidebar-title" style="cursor:pointer;" onclick="showPage(\''+ck+'\')">'+c.label+'</div>';
+    c.items.forEach(function(key){
+      sb += '<div class="sidebar-link" onclick="showPage(\''+key+'\')">'+
+        '<span class="sidebar-link-dot"></span><span>'+SHORT[key]+'</span></div>';
+    });
+    sb += '</div>';
+  });
+  document.getElementById('homeCatSidebar').innerHTML = sb;
+}
+
+/* ═══════════════════════════════════════════
+   BUILD: BEAUTY CATEGORY PAGE
+═══════════════════════════════════════════ */
+function buildBeautyCat(catId){
+  var cat = BEAUTY_CATS[catId];
+
+  document.getElementById('beautyCatBreadcrumb').innerHTML =
+    '<span onclick="showPage(\'beauty\')">The Beauty of Indonesia</span>'+
+    '<span class="sep">›</span>'+
+    '<span class="current">'+cat.label+'</span>';
+
+  document.getElementById('beautyCatBanner').innerHTML =
+    '<div class="detail-icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.4" stroke-linecap="round">'+cat.icon+'</svg></div>'+
+    '<div class="detail-banner-txt">'+
+      '<div class="detail-category">The Beauty of Indonesia</div>'+
+      '<h1>'+cat.label+'</h1>'+
+      '<div class="detail-website"><span style="font-size:12px;color:rgba(200,160,60,.55);letter-spacing:1px;">'+cat.subtitle+'</span></div>'+
+    '</div>';
+
+  var main = '<div class="detail-section">'+
+    '<div class="section-label"><span></span><h2>Overview</h2></div>'+
+    '<div class="detail-text"><p>'+cat.desc+'</p></div>'+
+  '</div>'+
+  '<div class="detail-section">'+
+    '<div class="section-label"><span></span><h2>Data Sources in This Category</h2></div>';
+
+  cat.items.forEach(function(key){
+    var d = BEAUTY_DATA[key];
+    main += '<div style="background:rgba(200,160,60,.04);border:1px solid rgba(200,160,60,.15);border-radius:8px;padding:22px 24px;margin-bottom:16px;cursor:pointer;transition:border-color .18s,background .18s;" '+
+      'onmouseover="this.style.borderColor=\'rgba(200,160,60,.4)\';this.style.background=\'rgba(200,160,60,.07)\'" '+
+      'onmouseout="this.style.borderColor=\'rgba(200,160,60,.15)\';this.style.background=\'rgba(200,160,60,.04)\'" '+
+      'onclick="showPage(\''+key+'\')" >'+
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round" style="width:16px;height:16px;flex-shrink:0;">'+d.icon+'</svg>'+
+        '<strong style="font-size:13px;color:#ddd;font-weight:600;">'+d.name+'</strong>'+
+        '<span style="margin-left:auto;font-size:11px;color:rgba(200,160,60,.5);">View details ›</span>'+
+      '</div>'+
+      '<p style="font-size:12.5px;line-height:1.7;color:rgba(175,175,175,.65);">'+d.overview+'</p>'+
+      '<div style="margin-top:10px;"><a href="'+d.website+'" target="_blank" onclick="event.stopPropagation()" style="font-size:11px;color:rgba(200,160,60,.55);text-decoration:none;letter-spacing:.5px;">&#127760; '+d.websiteLabel+' &#8599;</a></div>'+
+    '</div>';
+  });
+  main += '</div>';
+
+  document.getElementById('beautyCatMain').innerHTML = main;
+
+  /* sidebar — all 4 categories + sources */
+  var sb = '';
+  Object.keys(BEAUTY_CATS).forEach(function(ck){
+    var c = BEAUTY_CATS[ck];
+    var isCurrent = ck===catId;
+    sb += '<div class="sidebar-section">'+
+      '<div class="sidebar-title" style="cursor:pointer;" onclick="showPage(\''+ck+'\')">'+c.label+'</div>';
+    c.items.forEach(function(key){
+      var cls = (isCurrent) ? '' : '';
+      sb += '<div class="sidebar-link" onclick="showPage(\''+key+'\')">'+
+        '<span class="sidebar-link-dot"></span>'+
+        '<span>'+BEAUTY_SHORT[key]+'</span></div>';
+    });
+    sb += '</div>';
+  });
+  document.getElementById('beautyCatSidebar').innerHTML = sb;
+}
+
+/* ═══════════════════════════════════════════
+   BUILD: BEAUTY SOURCE DETAIL PAGE
+═══════════════════════════════════════════ */
+function buildBeautyDetail(id){
+  var d = BEAUTY_DATA[id];
+  var cat = BEAUTY_CATS[d.catId];
+
+  document.getElementById('detailBreadcrumb').innerHTML =
+    '<span onclick="showPage(\'beauty\')">The Beauty of Indonesia</span>'+
+    '<span class="sep">›</span>'+
+    '<span onclick="showPage(\''+d.catId+'\')">'+d.category+'</span>'+
+    '<span class="sep">›</span>'+
+    '<span class="current">'+BEAUTY_SHORT[id]+'</span>';
+
+  document.getElementById('detailBanner').innerHTML =
+    '<div class="detail-icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.4" stroke-linecap="round">'+d.icon+'</svg></div>'+
+    '<div class="detail-banner-txt">'+
+      '<div class="detail-category">The Beauty of Indonesia — '+d.category+'</div>'+
+      '<h1>'+d.name+'</h1>'+
+      '<div class="detail-website"><a href="'+d.website+'" target="_blank">&#127760; '+d.websiteLabel+' &#8599;</a></div>'+
+    '</div>';
+
+  /* build keypoints HTML */
+  var kpHtml = '';
+  if(d.keypoints){
+    var kp = d.keypoints;
+    kpHtml = '<div class="detail-section">'+
+      '<div class="section-label"><span></span><h2>Key Data Points 2026</h2></div>'+
+      '<div class="kdp-meta">'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.5" stroke-linecap="round" style="width:14px;height:14px;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>'+
+        '<span>Source: <strong>'+kp.meta+'</strong></span>'+
+      '</div>'+
+      '<div class="kdp-grid">';
+    kp.items.forEach(function(item){
+      var typeClass = item.type==='positive' ? 'positive' : item.type==='risk' ? 'risk' : 'neutral';
+      var typeLabel = item.type==='positive' ? '&#9650; Positive Signal' : item.type==='risk' ? '&#9888; Risk Factor' : '&#9654; Key Indicator';
+      var cardClass = item.type==='risk' ? ' kdp-risk' : '';
+      kpHtml += '<div class="kdp-card'+cardClass+'">'+
+        '<div class="kdp-type '+typeClass+'">'+typeLabel+'</div>'+
+        '<div class="kdp-text">'+item.text+'</div>'+
+      '</div>';
+    });
+    kpHtml += '</div></div>';
+  }
+
+  document.getElementById('detailMain').innerHTML =
+    '<div class="detail-section">'+
+      '<div class="section-label"><span></span><h2>Overview</h2></div>'+
+      '<div class="detail-text"><p>'+d.overview+'</p></div>'+
+    '</div>'+
+    '<div class="detail-section">'+
+      '<div class="section-label"><span></span><h2>About This Source</h2></div>'+
+      '<div class="detail-text"><p>'+d.detail+'</p></div>'+
+    '</div>'+
+    kpHtml+
+    '<div class="detail-section">'+
+      '<div class="section-label"><span></span><h2>Relevance to Risk Management</h2></div>'+
+      '<div class="risk-box">'+
+        '<div class="risk-box-label">&#9646; Risk Advisory Context</div>'+
+        '<p>'+d.relevance+'</p>'+
+      '</div>'+
+    '</div>'+
+    '<div class="detail-section">'+
+      '<div class="section-label"><span></span><h2>Official Source</h2></div>'+
+      '<a class="ext-btn" href="'+d.website+'" target="_blank">'+
+        '<span>Visit '+d.websiteLabel+'</span>'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'+
+      '</a>'+
+    '</div>';
+
+  /* sidebar */
+  var sb = '<div class="sidebar-section"><div class="sidebar-title">'+cat.label+'</div>';
+  cat.items.forEach(function(key){
+    var cls = key===id ? ' active-link' : '';
+    sb += '<div class="sidebar-link'+cls+'" onclick="showPage(\''+key+'\')">'+
+      '<span class="sidebar-link-dot"></span><span>'+BEAUTY_SHORT[key]+'</span></div>';
+  });
+  sb += '</div>';
+  Object.keys(BEAUTY_CATS).forEach(function(ck){
+    if(ck===d.catId) return;
+    var c = BEAUTY_CATS[ck];
+    sb += '<div class="sidebar-section"><div class="sidebar-title" style="cursor:pointer;" onclick="showPage(\''+ck+'\')">'+c.label+'</div>';
+    c.items.forEach(function(key){
+      sb += '<div class="sidebar-link" onclick="showPage(\''+key+'\')">'+
+        '<span class="sidebar-link-dot"></span><span>'+BEAUTY_SHORT[key]+'</span></div>';
+    });
+    sb += '</div>';
+  });
+  document.getElementById('detailSidebar').innerHTML = sb;
+}
+
+/* ═══════════════════════════════════════════
+   BUILD: HOME DETAIL PAGE
+═══════════════════════════════════════════ */
+function buildDetail(id){
+  var d = DATA[id];
+  if(!d) return;
+  var g = GROUPS[d.group];
+
+  var catId = 'home-'+d.group;
+  /* breadcrumb */
+  document.getElementById('detailBreadcrumb').innerHTML =
+    '<span onclick="showPage(\'home\')" style="cursor:pointer;">Home</span>'+
+    '<span class="sep">›</span>'+
+    '<span onclick="showPage(\''+catId+'\')" style="cursor:pointer;">'+d.category+'</span>'+
+    '<span class="sep">›</span>'+
+    '<span class="current">'+SHORT[id]+'</span>';
+
+  /* banner */
+  document.getElementById('detailBanner').innerHTML =
+    '<div class="detail-icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="1.4" stroke-linecap="round">'+d.icon+'</svg></div>'+
+    '<div class="detail-banner-txt">'+
+      '<div class="detail-category">'+d.category+'</div>'+
+      '<h1>'+d.name+'</h1>'+
+      '<div class="detail-website"><a href="'+d.website+'" target="_blank">&#127760; '+d.websiteLabel+' &#8599;</a></div>'+
+    '</div>';
+
+  /* main content */
+  document.getElementById('detailMain').innerHTML =
+    '<div class="detail-section">'+
+      '<div class="section-label"><span></span><h2>Overview</h2></div>'+
+      '<div class="detail-text"><p>'+d.overview+'</p></div>'+
+    '</div>'+
+    '<div class="detail-section">'+
+      '<div class="section-label"><span></span><h2>About This Institution</h2></div>'+
+      '<div class="detail-text"><p>'+d.detail+'</p></div>'+
+    '</div>'+
+    '<div class="detail-section">'+
+      '<div class="section-label"><span></span><h2>Relevance to Risk Management</h2></div>'+
+      '<div class="risk-box">'+
+        '<div class="risk-box-label">&#9646; Risk Advisory Context</div>'+
+        '<p>'+d.relevance+'</p>'+
+      '</div>'+
+    '</div>'+
+    '<div class="detail-section">'+
+      '<div class="section-label"><span></span><h2>Official Website</h2></div>'+
+      '<a class="ext-btn" href="'+d.website+'" target="_blank">'+
+        '<span>Visit '+d.websiteLabel+'</span>'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="#c8a03c" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'+
+      '</a>'+
+    '</div>';
+
+  /* sidebar */
+  var sb = '<div class="sidebar-section">'+
+    '<div class="sidebar-title" style="cursor:pointer;" onclick="showPage(\''+catId+'\')">'+g.label+'</div>';
+  g.items.forEach(function(key){
+    var cls = key===id ? ' active-link' : '';
+    sb += '<div class="sidebar-link'+cls+'" onclick="showPage(\''+key+'\')">'+
+      '<span class="sidebar-link-dot"></span>'+
+      '<span>'+SHORT[key]+'</span></div>';
+  });
+  sb += '</div>';
+  Object.keys(HOME_CATS).forEach(function(ck){
+    if(ck===catId) return;
+    var gg=HOME_CATS[ck];
+    sb += '<div class="sidebar-section">'+
+      '<div class="sidebar-title" style="cursor:pointer;" onclick="showPage(\''+ck+'\')">'+gg.label+'</div>';
+    gg.items.forEach(function(key){
+      sb += '<div class="sidebar-link" onclick="showPage(\''+key+'\')">'+
+        '<span class="sidebar-link-dot"></span>'+
+        '<span>'+SHORT[key]+'</span></div>';
+    });
+    sb += '</div>';
+  });
+  document.getElementById('detailSidebar').innerHTML = sb;
+}
+</script>
+</body>
+</html>
